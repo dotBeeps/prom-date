@@ -40,7 +40,7 @@ public class Modloader : MonoBehaviour
 		string[] files = Directory.GetFiles(path, "*.xml");
 		XmlSerializer xmlSerializer = new XmlSerializer(typeof(EventContainer));
 		List<EventManager.CEventFlow> list = new List<EventManager.CEventFlow>();
-		int num = 1;
+		int num = 0;
 		foreach (string text in files)
 		{
 			GeneralManager.Instance.LogToFileOrConsole("[Prom Date] Loading event from " + text, false, false);

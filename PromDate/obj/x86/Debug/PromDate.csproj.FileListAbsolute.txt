@@ -1,0 +1,13 @@
+C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\bin\Debug\PromDate.dll
+C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\bin\Debug\PromDate.pdb
+C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\bin\Debug\Assembly-CSharp.dll
+C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\bin\Debug\System.dll
+C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\bin\Debug\System.Xml.dll
+C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\bin\Debug\UnityEngine.dll
+C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\bin\Debug\UnityEngine.Networking.dll
+C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\bin\Debug\Assembly-CSharp-firstpass.dll
+C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\obj\x86\Debug\PromDate.csprojResolveAssemblyReference.cache
+C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\obj\x86\Debug\PromDate.csproj.CoreCompileInputs.cache
+C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\obj\x86\Debug\PromDate.csproj.CopyComplete
+C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\obj\x86\Debug\PromDate.dll
+C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\obj\x86\Debug\PromDate.pdb
