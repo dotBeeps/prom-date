@@ -10,6 +10,9 @@ In it's current state, Prom Date is capable of reading XML files, turning them i
 ## So I can finally date [Slayer/Narrator/Myself?]
 Sure, add an event where you date the sun for all I care.
 
+## Where can I download this???
+Unfortunately Prom Date is not available yet, there are a lot of things I'd like to add, clean up, and test before I release it. If you know how to inject the necessary code into Monster Prom to get it to load the modloader feel free to clone and compile this yourself if you want to try and figure it out.
+
 ## Can I see an example?
 Ye
 ![NarratorEvent](https://i.imgur.com/qUBeM4H.png)
