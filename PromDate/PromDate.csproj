@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\Downloads\Release\Release\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\Monster Prom Mod Dev\MonsterProm_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -54,10 +57,14 @@
     <Compile Include="ContData.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventContainer.cs" />
+    <Compile Include="EventManager_CalculateAndGetSuitableEvent_Patch.cs" />
     <Compile Include="EventRestriction.cs" />
     <Compile Include="Modloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

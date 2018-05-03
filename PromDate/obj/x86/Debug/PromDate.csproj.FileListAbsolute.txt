@@ -11,3 +11,10 @@ C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\obj\x86\Debug\PromDate.cs
 C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\obj\x86\Debug\PromDate.csproj.CopyComplete
 C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\obj\x86\Debug\PromDate.dll
 C:\Users\ddogc\Documents\Monster Prom Modding\PromDate\obj\x86\Debug\PromDate.pdb
+C:\Users\David\Documents\prom-date\PromDate\bin\Debug\PromDate.dll
+C:\Users\David\Documents\prom-date\PromDate\bin\Debug\PromDate.pdb
+C:\Users\David\Documents\prom-date\PromDate\obj\x86\Debug\PromDate.csprojResolveAssemblyReference.cache
+C:\Users\David\Documents\prom-date\PromDate\obj\x86\Debug\PromDate.csproj.CoreCompileInputs.cache
+C:\Users\David\Documents\prom-date\PromDate\obj\x86\Debug\PromDate.dll
+C:\Users\David\Documents\prom-date\PromDate\obj\x86\Debug\PromDate.pdb
+C:\Users\David\Documents\prom-date\PromDate\bin\Debug\0Harmony.dll

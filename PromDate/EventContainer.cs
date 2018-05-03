@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ public class EventContainer
     public static EventManager.CEventFlow eventToFlow(Event ev, int eventIndex)
     {
         EventManager.CEventFlow flow = new EventManager.CEventFlow();
+
         flow.EventName = eventIndex + ": " + ev.Name;
         flow.EventType = (EEventType)Enum.Parse(typeof(EEventType), ev.Type);
         flow.Location = (ESchoolLocation)Enum.Parse(typeof(ESchoolLocation), ev.Location);
@@ -52,146 +54,9 @@ public class EventContainer
             {
                 flow.EventScenes[i].Illustration_Player = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_Player, typeof(Sprite));
             }
-            if (ev.EventScenes[i].Illustration_NPC_Solo_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Solo_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Solo_1, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Duo_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Duo_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Duo_1, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Duo_2 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Duo_2 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Duo_2, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Trio_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Trio_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Trio_1, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Trio_2 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Trio_2 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Trio_2, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Trio_3 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Trio_3 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Trio_3, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Quartet_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Quartet_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Quartet_1, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Quartet_2 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Quartet_2 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Quartet_2, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Quartet_3 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Quartet_3 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Quartet_3, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Quartet_4 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Quartet_4 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Quartet_4, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team1to2_T1_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team1to2_T1_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team1to2_T1_1, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team1to2_T2_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team1to2_T2_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team1to2_T2_1, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team1to2_T2_2 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team1to2_T2_2 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team1to2_T2_2, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team2to1_T1_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team2to1_T1_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team2to1_T1_1, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team2to1_T1_2 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team2to1_T1_2 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team2to1_T1_2, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team2to1_T2_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team2to1_T2_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team2to1_T2_1, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team2to2_T1_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team2to2_T1_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team2to2_T1_1, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team2to2_T1_2 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team2to2_T1_2 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team2to2_T1_2, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team2to2_T2_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team2to2_T2_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team2to2_T2_1, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team2to2_T2_2 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team2to2_T2_2 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team2to2_T2_2, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team1to3_T1_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team1to3_T1_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team1to3_T1_1, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team1to3_T2_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team1to3_T2_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team1to3_T2_1, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team1to3_T2_2 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team1to3_T2_2 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team1to3_T2_2, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team1to3_T2_3 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team1to3_T2_3 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team1to3_T2_3, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team3to1_T1_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team3to1_T1_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team3to1_T1_1, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team3to1_T1_2 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team3to1_T1_2 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team3to1_T1_2, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team3to1_T1_3 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team3to1_T1_3 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team3to1_T1_3, typeof(Sprite));
-            }
-            if (ev.EventScenes[i].Illustration_NPC_Team3to1_T2_1 != null)
-            {
-                flow.EventScenes[i].Illustration_NPC_Team3to1_T2_1 = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_NPC_Team3to1_T2_1, typeof(Sprite));
-            }
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Solo_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Solo_1;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Duo_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Duo_1;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Duo_2 = ev.EventScenes[i].IsLarge_Illustration_NPC_Duo_2;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Trio_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Trio_1;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Trio_2 = ev.EventScenes[i].IsLarge_Illustration_NPC_Trio_2;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Trio_3 = ev.EventScenes[i].IsLarge_Illustration_NPC_Trio_3;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Quartet_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Quartet_1;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Quartet_2 = ev.EventScenes[i].IsLarge_Illustration_NPC_Quartet_2;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Quartet_3 = ev.EventScenes[i].IsLarge_Illustration_NPC_Quartet_3;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Quartet_4 = ev.EventScenes[i].IsLarge_Illustration_NPC_Quartet_4;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team1to2_T1_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team1to2_T1_1;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team1to2_T2_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team1to2_T2_1;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team1to2_T2_2 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team1to2_T2_2;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team2to1_T1_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team2to1_T1_1;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team2to1_T1_2 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team2to1_T1_2;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team2to1_T2_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team2to1_T2_1;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team2to2_T1_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team2to2_T1_1;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team2to2_T1_2 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team2to2_T1_2;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team2to2_T2_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team2to2_T2_1;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team2to2_T2_2 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team2to2_T2_2;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team1to3_T1_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team1to3_T1_1;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team1to3_T2_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team1to3_T2_1;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team1to3_T2_2 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team1to3_T2_2;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team1to3_T2_3 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team1to3_T2_3;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team3to1_T1_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team3to1_T1_1;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team3to1_T1_2 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team3to1_T1_2;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team3to1_T1_3 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team3to1_T1_3;
-            flow.EventScenes[i].IsLarge_Illustration_NPC_Team3to1_T2_1 = ev.EventScenes[i].IsLarge_Illustration_NPC_Team3to1_T2_1;
+
+            SetupSprites(ref flow.EventScenes[i], ev.EventScenes[i]);
+           
             if (ev.EventScenes[i].WhoSpeaksNPC != null)
             {
                 flow.EventScenes[i].WhoSpeaksNPC = ev.EventScenes[i].WhoSpeaksNPC;
@@ -200,6 +65,7 @@ public class EventContainer
             {
                 flow.EventScenes[i].WhoSpeaksSprite = ev.EventScenes[i].WhoSpeaksSprite;
             }
+            if (ev.EventScenes[i].Text == null) throw new ArgumentNullException("Text", "Text cannot be null, please check your xml file.");
             flow.EventScenes[i].Text[ELanguage.English] = ev.EventScenes[i].Text;
             flow.EventScenes[i].IsOptionScene = ev.EventScenes[i].IsOptionScene;
             flow.EventScenes[i].TextOption2[ELanguage.English] = ev.EventScenes[i].TextOption2;
@@ -318,5 +184,120 @@ public class EventContainer
             flow.Option2Failure_RuleMoreTags = ev.Option2Failure_RuleMoreTags.ToArray();
         }
         return flow;
+    }
+
+    public static void SetupSprites(ref EventManager.CEventFlow.CEventScene flowScene, Scene scene)
+    {
+        EventManagerEditor_Helper helper = new EventManagerEditor_Helper();
+        MethodInfo getNpcSpritePath = helper.GetType().GetMethod("GetNpcSpritePath", BindingFlags.NonPublic | BindingFlags.Instance);
+        GeneralManager.Instance.LogToFileOrConsole("[PromDate] Acquired sprite path method from eventmanager helper.");
+        switch (flowScene.SceneLayout)
+        {
+            case EEventLayoutType.Solo:
+                Character cha1 = scene.Illustration_NPC_Solo_1;
+                object spritePath = getNpcSpritePath.Invoke(helper, new object[] { cha1.Name.ToUpper(), cha1.Outfit, cha1.Mood });
+                GeneralManager.Instance.LogToFileOrConsole("[Prom Date] Sprite path is: " + (string)spritePath);
+                Sprite npcSprite = (Sprite)Resources.Load((string)spritePath, typeof(Sprite));
+                flowScene.IsLarge_Illustration_NPC_Solo_1 = cha1.Large;
+                flowScene.Illustration_NPC_Solo_1 = npcSprite;
+                break;
+            case EEventLayoutType.Duo:
+                cha1 = scene.Illustration_NPC_Duo_1;
+                Character cha2 = scene.Illustration_NPC_Duo_2;
+                flowScene.IsLarge_Illustration_NPC_Duo_1 = cha1.Large;
+                flowScene.IsLarge_Illustration_NPC_Duo_2 = cha2.Large;
+                flowScene.Illustration_NPC_Duo_1 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha1.Name.ToUpper(), cha1.Outfit, cha1.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Duo_2 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha2.Name.ToUpper(), cha2.Outfit, cha2.Mood }), typeof(Sprite));
+                break;
+            case EEventLayoutType.Trio:
+                cha1 = scene.Illustration_NPC_Trio_1;
+                cha2 = scene.Illustration_NPC_Trio_2;
+                Character cha3 = scene.Illustration_NPC_Trio_3;
+                flowScene.IsLarge_Illustration_NPC_Trio_1 = cha1.Large;
+                flowScene.IsLarge_Illustration_NPC_Trio_2 = cha2.Large;
+                flowScene.IsLarge_Illustration_NPC_Trio_3 = cha3.Large;
+                flowScene.Illustration_NPC_Trio_1 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha1.Name.ToUpper(), cha1.Outfit, cha1.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Trio_2 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha2.Name.ToUpper(), cha2.Outfit, cha2.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Trio_3 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha3.Name.ToUpper(), cha3.Outfit, cha3.Mood }), typeof(Sprite));
+                break;
+            case EEventLayoutType.Quartet:
+                cha1 = scene.Illustration_NPC_Quartet_1;
+                cha2 = scene.Illustration_NPC_Quartet_2;
+                cha3 = scene.Illustration_NPC_Quartet_3;
+                Character cha4 = scene.Illustration_NPC_Quartet_4;
+                flowScene.IsLarge_Illustration_NPC_Quartet_1 = cha1.Large;
+                flowScene.IsLarge_Illustration_NPC_Quartet_2 = cha2.Large;
+                flowScene.IsLarge_Illustration_NPC_Quartet_3 = cha3.Large;
+                flowScene.IsLarge_Illustration_NPC_Quartet_4 = cha4.Large;
+                flowScene.Illustration_NPC_Quartet_1 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha1.Name.ToUpper(), cha1.Outfit, cha1.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Quartet_2 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha2.Name.ToUpper(), cha2.Outfit, cha2.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Quartet_3 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha3.Name.ToUpper(), cha3.Outfit, cha3.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Quartet_4 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha4.Name.ToUpper(), cha4.Outfit, cha4.Mood }), typeof(Sprite));
+                break;
+            case EEventLayoutType.Team1to2:
+                cha1 = scene.Illustration_NPC_Team1to2_T1_1;
+                cha2 = scene.Illustration_NPC_Team1to2_T2_1;
+                cha3 = scene.Illustration_NPC_Team1to2_T2_2;
+                flowScene.IsLarge_Illustration_NPC_Team1to2_T1_1 = cha1.Large;
+                flowScene.IsLarge_Illustration_NPC_Team1to2_T2_1 = cha2.Large;
+                flowScene.IsLarge_Illustration_NPC_Team1to2_T2_2 = cha3.Large;
+                flowScene.Illustration_NPC_Team1to2_T1_1 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha1.Name.ToUpper(), cha1.Outfit, cha1.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Team1to2_T2_1 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha2.Name.ToUpper(), cha2.Outfit, cha2.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Team1to2_T2_2 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha3.Name.ToUpper(), cha3.Outfit, cha3.Mood }), typeof(Sprite));
+                break;
+            case EEventLayoutType.Team2to1:
+                cha1 = scene.Illustration_NPC_Team2to1_T1_1;
+                cha2 = scene.Illustration_NPC_Team2to1_T1_2;
+                cha3 = scene.Illustration_NPC_Team2to1_T2_1;
+                flowScene.IsLarge_Illustration_NPC_Team2to1_T1_1 = cha1.Large;
+                flowScene.IsLarge_Illustration_NPC_Team2to1_T1_2 = cha2.Large;
+                flowScene.IsLarge_Illustration_NPC_Team2to1_T2_1 = cha3.Large;
+                flowScene.Illustration_NPC_Team2to1_T1_1 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha1.Name.ToUpper(), cha1.Outfit, cha1.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Team2to1_T1_2 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha2.Name.ToUpper(), cha2.Outfit, cha2.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Team2to1_T2_1 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha3.Name.ToUpper(), cha3.Outfit, cha3.Mood }), typeof(Sprite));
+                break;
+            case EEventLayoutType.Team2to2:
+                cha1 = scene.Illustration_NPC_Team2to2_T1_1;
+                cha2 = scene.Illustration_NPC_Team2to2_T1_2;
+                cha3 = scene.Illustration_NPC_Team2to2_T2_1;
+                cha4 = scene.Illustration_NPC_Team2to2_T2_2;
+                flowScene.IsLarge_Illustration_NPC_Team2to2_T1_1 = cha1.Large;
+                flowScene.IsLarge_Illustration_NPC_Team2to2_T1_2 = cha2.Large;
+                flowScene.IsLarge_Illustration_NPC_Team2to2_T2_1 = cha3.Large;
+                flowScene.IsLarge_Illustration_NPC_Team2to2_T2_2 = cha4.Large;
+                flowScene.Illustration_NPC_Team2to2_T1_1 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha1.Name.ToUpper(), cha1.Outfit, cha1.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Team2to2_T1_2 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha2.Name.ToUpper(), cha2.Outfit, cha2.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Team2to2_T2_1 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha3.Name.ToUpper(), cha3.Outfit, cha3.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Team2to2_T2_2 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha4.Name.ToUpper(), cha4.Outfit, cha4.Mood }), typeof(Sprite));
+                break;
+            case EEventLayoutType.Team3to1:
+                cha1 = scene.Illustration_NPC_Team3to1_T1_1;
+                cha2 = scene.Illustration_NPC_Team3to1_T1_2;
+                cha3 = scene.Illustration_NPC_Team3to1_T1_3;
+                cha4 = scene.Illustration_NPC_Team3to1_T2_1;
+                flowScene.IsLarge_Illustration_NPC_Team3to1_T1_1 = cha1.Large;
+                flowScene.IsLarge_Illustration_NPC_Team3to1_T1_2 = cha2.Large;
+                flowScene.IsLarge_Illustration_NPC_Team3to1_T1_3 = cha3.Large;
+                flowScene.IsLarge_Illustration_NPC_Team3to1_T2_1 = cha4.Large;
+                flowScene.Illustration_NPC_Team3to1_T1_1 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha1.Name.ToUpper(), cha1.Outfit, cha1.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Team3to1_T1_2 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha2.Name.ToUpper(), cha2.Outfit, cha2.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Team3to1_T1_3 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha3.Name.ToUpper(), cha3.Outfit, cha3.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Team3to1_T2_1 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha4.Name.ToUpper(), cha4.Outfit, cha4.Mood }), typeof(Sprite));
+                break;
+            case EEventLayoutType.Team1to3:
+                cha1 = scene.Illustration_NPC_Team1to3_T1_1;
+                cha2 = scene.Illustration_NPC_Team1to3_T2_1;
+                cha3 = scene.Illustration_NPC_Team1to3_T2_2;
+                cha4 = scene.Illustration_NPC_Team1to3_T2_3;
+                flowScene.IsLarge_Illustration_NPC_Team1to3_T1_1 = cha1.Large;
+                flowScene.IsLarge_Illustration_NPC_Team1to3_T2_1 = cha2.Large;
+                flowScene.IsLarge_Illustration_NPC_Team1to3_T2_2 = cha3.Large;
+                flowScene.IsLarge_Illustration_NPC_Team1to3_T2_3 = cha4.Large;
+                flowScene.Illustration_NPC_Team1to3_T1_1 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha1.Name.ToUpper(), cha1.Outfit, cha1.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Team1to3_T2_1 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha2.Name.ToUpper(), cha2.Outfit, cha2.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Team1to3_T2_2 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha3.Name.ToUpper(), cha3.Outfit, cha3.Mood }), typeof(Sprite));
+                flowScene.Illustration_NPC_Team1to3_T2_3 = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(helper, new object[] { cha4.Name.ToUpper(), cha4.Outfit, cha4.Mood }), typeof(Sprite));
+                break;
+        }
     }
 }

@@ -1,0 +1,10 @@
+C:\Users\David\Documents\prom-date\ThePregame\bin\Debug\ThePregame.exe.config
+C:\Users\David\Documents\prom-date\ThePregame\bin\Debug\ThePregame.exe
+C:\Users\David\Documents\prom-date\ThePregame\bin\Debug\ThePregame.pdb
+C:\Users\David\Documents\prom-date\ThePregame\obj\Debug\ThePregame.csprojResolveAssemblyReference.cache
+C:\Users\David\Documents\prom-date\ThePregame\obj\Debug\ThePregame.Form1.resources
+C:\Users\David\Documents\prom-date\ThePregame\obj\Debug\ThePregame.Properties.Resources.resources
+C:\Users\David\Documents\prom-date\ThePregame\obj\Debug\ThePregame.csproj.GenerateResource.Cache
+C:\Users\David\Documents\prom-date\ThePregame\obj\Debug\ThePregame.csproj.CoreCompileInputs.cache
+C:\Users\David\Documents\prom-date\ThePregame\obj\Debug\ThePregame.exe
+C:\Users\David\Documents\prom-date\ThePregame\obj\Debug\ThePregame.pdb
