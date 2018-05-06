@@ -1,0 +1,44 @@
+<EventCollection>
+	<Events>
+		<Event>
+		<Name>NarratorNotice</Name>
+		<Type>Special</Type>
+		<Location>None</Location>
+		<EventScenes>
+			<Scene>
+				<SceneLayout>None</SceneLayout>
+				<WhoSpeaksNPC>NARRATOR</WhoSpeaksNPC>
+				<Text>Hey, um... This is kind of out of character but can I talk to you?</Text>
+			</Scene>
+			<Scene>
+				<SceneLayout>None</SceneLayout>
+				<Text>It occurs to you that The Narrator has never spoke with you directly.</Text>
+			</Scene>
+			<Scene>
+				<SceneLayout>None</SceneLayout>
+				<WhoSpeaksNPC>NARRATOR</WhoSpeaksNPC>
+				<Text>I noticed that you've been spending a lot of time with me recently...</Text>
+			</Scene>
+			<Scene>
+				<SceneLayout>None</SceneLayout>
+				<WhoSpeaksNPC>NARRATOR</WhoSpeaksNPC>
+				<Text>...and I just want to say that I appreciate it. Most folks just read through my dialogue and move on, but you stuck around, if only for a bit more time.</Text>
+			</Scene>
+			<Scene>
+				<SceneLayout>None</SceneLayout>
+				<WhoSpeaksNPC>NARRATOR</WhoSpeaksNPC>
+				<Text>If this mod was complete I'd ask for you to meet again with me tomorrow.</Text>
+			</Scene>
+			<Scene>
+				<SceneLayout>None</SceneLayout>
+				<WhoSpeaksNPC>NARRATOR</WhoSpeaksNPC>
+				<Text>Since it's not, this will have to do.</Text>
+			</Scene>
+			<Scene>
+				<SceneLayout>None</SceneLayout>
+				<Text>The Narrator gives you +5 LOVE! Which roughly equates to +100 MONEY</Text>
+			</Scene>
+		</EventScenes>
+		</Event>
+	</Events>
+</EventCollection>

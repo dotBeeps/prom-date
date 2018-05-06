@@ -2,51 +2,49 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace NarratorDate
+public class Mod : MonoBehaviour
 {
-    public class Mod : MonoBehaviour
+    private float narratorTalking;
+    private bool trackNarrator = false;
+    private Modloader.EventArgs narratorEvent;
+
+    public Mod()
     {
-        private float narratorTalking;
-        private bool trackNarrator = false;
+        narratorEvent = new Modloader.EventArgs();
+        narratorEvent.name = "NarratorNotice";
+        narratorEvent.turnType = NGameConstants.ETurnType.School;
+        Modloader.Instance.AddToModEvents(narratorEvent);
+        SceneManager.activeSceneChanged += this.OnSceneLoaded;
+        GeneralManager.Instance.LogToFileOrConsole("[NarratorDate] Loaded in.");
+    }
 
-        public Mod()
+    public void Update()
+    {
+        if (EventManager.Instance != null)
         {
-            Modloader.Instance.potentialEvents.Add(new Modloader.WantsToPlayEvent(NarratorEvent));
-            SceneManager.activeSceneChanged += this.OnSceneLoaded;
-            GeneralManager.Instance.LogToFileOrConsole("[NarratorDate] Loaded in.");
-        }
-
-        public void Update()
-        {
-            if (EventManager.Instance != null)
+            int currentEvent = (int)EventManager.Instance.GetType().GetField("mEventIndexActive", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(EventManager.Instance);
+            if (trackNarrator && EventManager.Instance.GetCurrentActiveEventScene() > 0)
             {
-                int currentEvent = (int)EventManager.Instance.GetType().GetField("mEventIndexActive", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(EventManager.Instance);
-                if (trackNarrator && EventManager.Instance.GetCurrentActiveEventScene() > 0)
+                if (EventManager.Instance.GetAllSpeakersForEvent(currentEvent).Contains("NARRATOR"))
                 {
-                    if (EventManager.Instance.GetAllSpeakersForEvent(currentEvent).Contains("NARRATOR"))
-                    {
-                        narratorTalking += Time.deltaTime;
-                        trackNarrator = false;
-                        narratorTalking = 0f;
-                    }
+                    narratorTalking += Time.deltaTime;
+                }
+
+                if (narratorTalking > 30f)
+                {
+                    Modloader.Instance.RequestModEvent(narratorEvent);
+                    trackNarrator = false;
                 }
             }
         }
+    }
 
-        public string NarratorEvent()
+    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene oldScene, UnityEngine.SceneManagement.Scene newScene)
+    {
+        if (newScene.name == "InGame_School")
         {
-            bool inLunch = GameManager.Instance.GetCurrentTurnType() == NGameConstants.ETurnType.Cafeteria;
-            if (!inLunch && narratorTalking > 30f) return "NarratorNotice";
-            else return null;
-        }
-
-        private void OnSceneLoaded(UnityEngine.SceneManagement.Scene oldScene, UnityEngine.SceneManagement.Scene newScene)
-        {
-            if (newScene.name == "InGame_School")
-            {
-                narratorTalking = 0f;
-                trackNarrator = true;
-            }
+            narratorTalking = 0f;
+            trackNarrator = true;
         }
     }
 }

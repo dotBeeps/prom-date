@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>obj\x86\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -55,7 +55,7 @@
     <Compile Include="ContData.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventContainer.cs" />
-    <Compile Include="EventManager_CalculateAndGetSuitableEvent_Patch.cs" />
+    <Compile Include="EventManager_CoStartSuitableEvent_Patch.cs" />
     <Compile Include="EventRestriction.cs" />
     <Compile Include="Harmony\Attributes.cs" />
     <Compile Include="Harmony\CodeInstruction.cs" />
@@ -95,7 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Harmony\Properties\launchSettings.json" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Harmony\Harmony.csproj" />
