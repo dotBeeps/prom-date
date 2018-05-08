@@ -27,16 +27,10 @@ namespace PromDate.Installer
 
             DirectoryInfo monsterPromDir = new DirectoryInfo(path);
             monsterPromDir.CreateSubdirectory("Installer");
-            string zip = monsterPromDir.FullName + "/Installer/promdate-dl.zip";
-            string extract = monsterPromDir.FullName + "/Installer/extracted";
-
             WebClient webClient = new WebClient();
             webClient.Headers["user-agent"] = "Mozilla / 5.0(Windows NT 6.1; WOW64; rv: 40.0) Gecko / 20100101 Firefox / 40.1";
-            string downloadUrl = downloadVersion.Assets.First(asset => asset.Name.Contains("PromDate-v")).BrowserDownloadUrl;
-            webClient.DownloadFile(new Uri(downloadUrl), zip);
-            if (Directory.Exists(extract))
-                Directory.Delete(extract);
-            ZipFile.ExtractToDirectory(zip, extract);
+            string downloadUrl = downloadVersion.Assets.First(asset => asset.Name == "PromDate.dll").BrowserDownloadUrl;
+            webClient.DownloadFile(new Uri(downloadUrl), monsterPromDir + "/Installer/PromDate.dll");
 
             string managedPath = monsterPromDir + "/MonsterProm_Data/Managed";
             File.Copy(managedPath + "/Assembly-CSharp.dll", managedPath + "/Assembly-CSharp.dll.backup");
@@ -45,20 +39,8 @@ namespace PromDate.Installer
             {
                 Directory.CreateDirectory(monsterPromDir + "/MonsterProm_Data/Mods");
             }
-            File.Copy(extract + "/PromDate.dll", monsterPromDir + "/MonsterProm_Data/Mods/PromDate.dll");
+            File.Copy(monsterPromDir + "/Installer/PromDate.dll", monsterPromDir + "/MonsterProm_Data/Mods/PromDate.dll");
 
-            if (!Directory.Exists(monsterPromDir + "/MonsterProm_Data/Mods/Audio"))
-                Directory.CreateDirectory(monsterPromDir + "/MonsterProm_Data/Mods/Audio");
-            if (!Directory.Exists(monsterPromDir + "/MonsterProm_Data/Mods/Characters"))
-                Directory.CreateDirectory(monsterPromDir + "/MonsterProm_Data/Mods/Characters");
-            if (!Directory.Exists(monsterPromDir + "/MonsterProm_Data/Mods/EndingConditions"))
-                Directory.CreateDirectory(monsterPromDir + "/MonsterProm_Data/Mods/EndingConditions");
-            if (!Directory.Exists(monsterPromDir + "/MonsterProm_Data/Mods/Events"))
-                Directory.CreateDirectory(monsterPromDir + "/MonsterProm_Data/Mods/Events");
-            if (!Directory.Exists(monsterPromDir + "/MonsterProm_Data/Mods/Images"))
-                Directory.CreateDirectory(monsterPromDir + "/MonsterProm_Data/Mods/Images");
-            if (!Directory.Exists(monsterPromDir + "/MonsterProm_Data/Mods/Items"))
-                Directory.CreateDirectory(monsterPromDir + "/MonsterProm_Data/Mods/Items");
             Directory.Delete(monsterPromDir.FullName + "/Installer", true);
         }
 

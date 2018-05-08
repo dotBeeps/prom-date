@@ -9,7 +9,7 @@ using System.IO;
 using System.Xml.Serialization;
 using UnityEngine.SceneManagement;
 
-class EventHelper : MonoBehaviour
+public class EventHelper : MonoBehaviour
 {
 
     private EventManager.CEventFlow cEvent;
