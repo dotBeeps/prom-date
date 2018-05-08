@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace PromDateInjector
+namespace PromDate.Injector
 {
     class Program
     {
