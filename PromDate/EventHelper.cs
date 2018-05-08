@@ -96,11 +96,11 @@ class EventHelper : MonoBehaviour
         EventManager.Instance.Events = EventManager.Instance.Events.Concat(list.ToArray()).ToArray<EventManager.CEventFlow>();
     }
 
-    public int CheckModEvents(int currentChoice)
+    public int CheckModEvents()
     {
         GeneralManager.Instance.LogToFileOrConsole("[PromDate] Checking if any mod events want to take control.");
         List<EventArgs> wantToPlay = new List<EventArgs>();
-        int idToPlay = currentChoice;
+        int idToPlay = -1;
         foreach (KeyValuePair<EventArgs, bool> pair in EventHelper.Instance.potentialEvents)
         {
             if (pair.Value && GameManager.Instance.GetCurrentTurnType() == pair.Key.turnType)

@@ -12,18 +12,16 @@ using System.Text;
 [HarmonyPatch("CalculateAndGetSuitableEvent")]
 public static class EventManager_CalculateAndGetSuitableEvent_Patch
 {
-    static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+
+    public static bool Prefix(ref int __result)
     {
-        var codes = new List<CodeInstruction>(instructions);
-        for (int i = codes.Count-1; i > 0; i--)
+        int modEventToTakeControl = EventHelper.Instance.CheckModEvents();
+        if (modEventToTakeControl != -1)
         {
-            if (codes[i].opcode == OpCodes.Ldloc_3)
-            {
-                codes.Insert(i, new CodeInstruction(OpCodes.Ldsfld, AccessTools.Field(typeof(EventHelper), "Instance")));
-                codes.Insert(i + 2, new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(typeof(EventHelper), "CheckModEvents")));
-                break;
-            }
+            __result = modEventToTakeControl;
+            return false;
         }
-        return codes.AsEnumerable();
+        return true;
     }
+
 }

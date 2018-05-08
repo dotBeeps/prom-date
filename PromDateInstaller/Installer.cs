@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Octokit;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -10,7 +12,16 @@ namespace PromDate.Installer
 {
     public class Installer
     {
-        public static void InstallPromDate(string path, string downloadUrl)
+        private static List<Release> releases = new List<Release>();
+
+        public static async System.Threading.Tasks.Task<List<Release>> GetReleasesAsync()
+        {
+            var client = new GitHubClient(new ProductHeaderValue("prom-date-installer"));
+            releases = (await client.Repository.Release.GetAll("FoolishDave", "prom-date")).ToList();
+            return releases;
+        }
+
+        public static void InstallPromDate(string path, string downloadVersion)
         {
             UninstallPromDate(path);
 
@@ -21,6 +32,7 @@ namespace PromDate.Installer
 
             WebClient webClient = new WebClient();
             webClient.Headers["user-agent"] = "Mozilla / 5.0(Windows NT 6.1; WOW64; rv: 40.0) Gecko / 20100101 Firefox / 40.1";
+            string downloadUrl = releases.First(release => release.TagName == downloadVersion).Assets[0].BrowserDownloadUrl;
             webClient.DownloadFile(new Uri(downloadUrl), zip);
             if (Directory.Exists(extract))
                 Directory.Delete(extract);
