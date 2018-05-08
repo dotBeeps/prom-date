@@ -19,8 +19,8 @@ public static class EventManager_CalculateAndGetSuitableEvent_Patch
         {
             if (codes[i].opcode == OpCodes.Ldloc_3)
             {
-                codes.Insert(i, new CodeInstruction(OpCodes.Ldsfld, AccessTools.Field(typeof(Modloader), "Instance")));
-                codes.Insert(i + 2, new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(typeof(Modloader), "CheckModEvents")));
+                codes.Insert(i, new CodeInstruction(OpCodes.Ldsfld, AccessTools.Field(typeof(EventHelper), "Instance")));
+                codes.Insert(i + 2, new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(typeof(EventHelper), "CheckModEvents")));
                 break;
             }
         }

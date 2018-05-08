@@ -8,11 +8,11 @@ public class Scene
 	// Token: 0x0400001D RID: 29
 	public string SceneLayout;
 
-	// Token: 0x0400001E RID: 30
-	public string Illustration_BG;
+    [XmlElement("Illustration_BG")]
+    public string Illustration_BG = String.Empty;
 
-	// Token: 0x0400001F RID: 31
-	public string Illustration_FG;
+    [XmlElement("Illustration_FG")]
+    public string Illustration_FG = String.Empty;
 
 	// Token: 0x04000020 RID: 32
 	public string Illustration_Player;

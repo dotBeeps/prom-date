@@ -17,7 +17,8 @@ class SpriteLoader : MonoBehaviour
     }
 
     public static SpriteLoader Instance;
-    public Dictionary<SpriteInfo, Sprite> customSprites = new Dictionary<SpriteInfo, Sprite>();
+    public List<Sprite> customSprites = new List<Sprite>();
+    public Dictionary<SpriteInfo, Sprite> customNpcSprites = new Dictionary<SpriteInfo, Sprite>();
     private EventManagerEditor_Helper eManHelper = new EventManagerEditor_Helper();
     private MethodInfo getNpcSpritePath;
 
@@ -37,18 +38,17 @@ class SpriteLoader : MonoBehaviour
 
     public Sprite ModTalkingSprite(string character)
     {
-        GeneralManager.Instance.LogToFileOrConsole("[PromDate] Sticker requested for character " + character);
         if (character != "" && character != null)
         {
             if (!ModConstants.VANILLA_CHARACTERS.Contains(character.ToUpper()))
             {
-                return customSprites[new SpriteInfo() { CharName = character.ToUpper(), Mood = "sticker", Outfit = 0 }];
+                return customNpcSprites[new SpriteInfo() { CharName = character.ToUpper(), Mood = "sticker", Outfit = 0 }];
             }
         }
         return null;
     }
 
-    public Sprite LookupSprite(string character, int outfit, string mood)
+    public Sprite LookupNpcSprite(string character, int outfit, string mood)
     {
         
         Sprite sprite = null;
@@ -57,10 +57,24 @@ class SpriteLoader : MonoBehaviour
             sprite = (Sprite)Resources.Load((string)getNpcSpritePath.Invoke(eManHelper, new object[] { character.ToUpper(), outfit, mood }), typeof(Sprite));
         } else
         {
-            GeneralManager.Instance.LogToFileOrConsole("[PromDate] Looking up custom sprite for " + character);
-            sprite = customSprites[new SpriteInfo() { CharName = character, Outfit = outfit, Mood = mood }];
+            sprite = customNpcSprites[new SpriteInfo() { CharName = character, Outfit = outfit, Mood = mood }];
         }
 
+        return sprite;
+    }
+
+    public Sprite LookupCustomSprite(string spriteName)
+    {
+        return customSprites.First(s => s.name.ToLower() == spriteName.ToLower());
+    }
+
+    public Sprite LookupEndingBG(string spriteName)
+    {
+        Sprite sprite = customSprites.First(s => s.name.ToLower() == spriteName.ToLower());
+        if (sprite == null)
+        {
+            sprite = (Sprite)Resources.Load("Illustrations/Endings/" + spriteName, typeof(Sprite));
+        }
         return sprite;
     }
 
@@ -85,7 +99,15 @@ class SpriteLoader : MonoBehaviour
                 spriteInfo.Mood = spriteName[2].ToLower();
                 sprite = LoadSpriteFromFile(file.FullName, file.Name.Split('.')[0]);
             }
-            customSprites.Add(spriteInfo, sprite);
+            customNpcSprites.Add(spriteInfo, sprite);
+        }
+
+        files = (new DirectoryInfo(Application.dataPath + "/Mods/Images")).GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
+        foreach (FileInfo file in files)
+        {
+            string spriteName = Path.GetFileNameWithoutExtension(file.Name);
+            Sprite sprite = LoadSpriteFromFile(file.FullName, spriteName);
+            customSprites.Add(sprite);
         }
     }
 
@@ -99,7 +121,6 @@ class SpriteLoader : MonoBehaviour
 
     private Sprite LoadSpriteFromFile(string path, string sprName, float ppu = 100f)
     {
-        GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loaded sprite from " + path);
         Texture2D sprTex = LoadTextureFromFile(path);
         Sprite sprite = Sprite.Create(sprTex, new Rect(0, 0, sprTex.width, sprTex.height), Vector2.zero, ppu);
         sprite.name = sprName;

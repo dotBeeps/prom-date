@@ -11,8 +11,6 @@ class EventManager_StartEvent_Patch
 {
     static void Prefix(ref int aEventIndex)
     {
-        if (aEventIndex > 50)
-            aEventIndex = 711;
         EventHelper.Instance.EventId = aEventIndex;
     }
 }

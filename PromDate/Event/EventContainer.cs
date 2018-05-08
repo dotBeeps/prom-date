@@ -43,13 +43,13 @@ public class EventContainer
             {
                 flow.EventScenes[i].SceneLayout = (EEventLayoutType)Enum.Parse(typeof(EEventLayoutType), ev.EventScenes[i].SceneLayout);
             }
-            if (ev.EventScenes[i].Illustration_BG != null)
+            if (ev.EventScenes[i].Illustration_BG != "")
             {
-                flow.EventScenes[i].Illustration_BG = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_BG, typeof(Sprite));
+                flow.EventScenes[i].Illustration_BG = SpriteLoader.Instance.LookupCustomSprite(ev.EventScenes[i].Illustration_FG);
             }
-            if (ev.EventScenes[i].Illustration_FG != null)
+            if (ev.EventScenes[i].Illustration_FG != "")
             {
-                flow.EventScenes[i].Illustration_FG = (Sprite)Resources.Load(ev.EventScenes[i].Illustration_FG, typeof(Sprite));
+                flow.EventScenes[i].Illustration_FG = SpriteLoader.Instance.LookupCustomSprite(ev.EventScenes[i].Illustration_FG);
             }
             if (ev.EventScenes[i].Illustration_Player != null)
             {
@@ -112,6 +112,7 @@ public class EventContainer
         }
         for (int j = 0; j < ev.EventRestrictions.Count; j++)
         {
+            flow.EventRestrictions[j] = new EventManager.CEventFlow.CEventRestriction();
             if (ev.EventRestrictions[j].Type != null)
             {
                 flow.EventRestrictions[j].RestrictionType = (EEventRestrictionType)Enum.Parse(typeof(EEventRestrictionType), ev.EventRestrictions[j].Type);
@@ -144,10 +145,10 @@ public class EventContainer
             flow.ContinuityData.Initialized = ev.ContinuityData.Initialized;
             flow.ContinuityData.IsContinuityRoot = ev.ContinuityData.IsContinuityRoot;
             flow.ContinuityData.ContinuityEventLengthFromThisNode = ev.ContinuityData.ContinuityEventLengthFromThisNode;
-            flow.ContinuityData.Option1Success_ContinuityIndex = ev.ContinuityData.Option1SuccessContinuityIndex;
-            flow.ContinuityData.Option1Failure_ContinuityIndex = ev.ContinuityData.Option1FailureContinuityIndex;
-            flow.ContinuityData.Option2Success_ContinuityIndex = ev.ContinuityData.Option2SuccessContinuityIndex;
-            flow.ContinuityData.Option2Failure_ContinuityIndex = ev.ContinuityData.Option2FailureContinuityIndex;
+            flow.ContinuityData.Option1Success_ContinuityIndex = eventIndex + ev.ContinuityData.Option1SuccessContinuityIndex;
+            flow.ContinuityData.Option1Failure_ContinuityIndex = eventIndex + ev.ContinuityData.Option1FailureContinuityIndex;
+            flow.ContinuityData.Option2Success_ContinuityIndex = eventIndex + ev.ContinuityData.Option2SuccessContinuityIndex;
+            flow.ContinuityData.Option2Failure_ContinuityIndex = eventIndex + ev.ContinuityData.Option2FailureContinuityIndex;
             flow.ContinuityData.Option1Success_IsSelfContinuity = ev.ContinuityData.Option1SuccessIsSelfContinuity;
             flow.ContinuityData.Option1Failure_IsSelfContinuity = ev.ContinuityData.Option1FailureIsSelfContinuity;
             flow.ContinuityData.Option2Success_IsSelfContinuity = ev.ContinuityData.Option2SuccessIsSelfContinuity;
@@ -201,15 +202,15 @@ public class EventContainer
                 Character cha1 = scene.Illustration_NPC_Solo_1;
                 flowScene.IsLarge_Illustration_NPC_Solo_1 = cha1.Large;
                 GeneralManager.Instance.LogToFileOrConsole("[PromDate] Looking up sprite for " + cha1.Name);
-                flowScene.Illustration_NPC_Solo_1 = SpriteLoader.Instance.LookupSprite(cha1.Name, cha1.Outfit, cha1.Mood);
+                flowScene.Illustration_NPC_Solo_1 = SpriteLoader.Instance.LookupNpcSprite(cha1.Name, cha1.Outfit, cha1.Mood);
                 break;
             case EEventLayoutType.Duo:
                 cha1 = scene.Illustration_NPC_Duo_1;
                 Character cha2 = scene.Illustration_NPC_Duo_2;
                 flowScene.IsLarge_Illustration_NPC_Duo_1 = cha1.Large;
                 flowScene.IsLarge_Illustration_NPC_Duo_2 = cha2.Large;
-                flowScene.Illustration_NPC_Duo_1 = SpriteLoader.Instance.LookupSprite(cha1.Name, cha1.Outfit, cha1.Mood);
-                flowScene.Illustration_NPC_Duo_2 = SpriteLoader.Instance.LookupSprite(cha2.Name, cha2.Outfit, cha2.Mood);
+                flowScene.Illustration_NPC_Duo_1 = SpriteLoader.Instance.LookupNpcSprite(cha1.Name, cha1.Outfit, cha1.Mood);
+                flowScene.Illustration_NPC_Duo_2 = SpriteLoader.Instance.LookupNpcSprite(cha2.Name, cha2.Outfit, cha2.Mood);
                 break;
             case EEventLayoutType.Trio:
                 cha1 = scene.Illustration_NPC_Trio_1;
@@ -218,9 +219,9 @@ public class EventContainer
                 flowScene.IsLarge_Illustration_NPC_Trio_1 = cha1.Large;
                 flowScene.IsLarge_Illustration_NPC_Trio_2 = cha2.Large;
                 flowScene.IsLarge_Illustration_NPC_Trio_3 = cha3.Large;
-                flowScene.Illustration_NPC_Trio_1 = SpriteLoader.Instance.LookupSprite(cha1.Name, cha1.Outfit, cha1.Mood);
-                flowScene.Illustration_NPC_Trio_2 = SpriteLoader.Instance.LookupSprite(cha2.Name, cha2.Outfit, cha2.Mood);
-                flowScene.Illustration_NPC_Trio_3 = SpriteLoader.Instance.LookupSprite(cha3.Name, cha3.Outfit, cha3.Mood);
+                flowScene.Illustration_NPC_Trio_1 = SpriteLoader.Instance.LookupNpcSprite(cha1.Name, cha1.Outfit, cha1.Mood);
+                flowScene.Illustration_NPC_Trio_2 = SpriteLoader.Instance.LookupNpcSprite(cha2.Name, cha2.Outfit, cha2.Mood);
+                flowScene.Illustration_NPC_Trio_3 = SpriteLoader.Instance.LookupNpcSprite(cha3.Name, cha3.Outfit, cha3.Mood);
                 break;
             case EEventLayoutType.Quartet:
                 cha1 = scene.Illustration_NPC_Quartet_1;
@@ -231,10 +232,10 @@ public class EventContainer
                 flowScene.IsLarge_Illustration_NPC_Quartet_2 = cha2.Large;
                 flowScene.IsLarge_Illustration_NPC_Quartet_3 = cha3.Large;
                 flowScene.IsLarge_Illustration_NPC_Quartet_4 = cha4.Large;
-                flowScene.Illustration_NPC_Quartet_1 = SpriteLoader.Instance.LookupSprite(cha1.Name, cha1.Outfit, cha1.Mood);
-                flowScene.Illustration_NPC_Quartet_2 = SpriteLoader.Instance.LookupSprite(cha2.Name, cha2.Outfit, cha2.Mood);
-                flowScene.Illustration_NPC_Quartet_3 = SpriteLoader.Instance.LookupSprite(cha3.Name, cha3.Outfit, cha3.Mood);
-                flowScene.Illustration_NPC_Quartet_4 = SpriteLoader.Instance.LookupSprite(cha4.Name, cha4.Outfit, cha4.Mood);
+                flowScene.Illustration_NPC_Quartet_1 = SpriteLoader.Instance.LookupNpcSprite(cha1.Name, cha1.Outfit, cha1.Mood);
+                flowScene.Illustration_NPC_Quartet_2 = SpriteLoader.Instance.LookupNpcSprite(cha2.Name, cha2.Outfit, cha2.Mood);
+                flowScene.Illustration_NPC_Quartet_3 = SpriteLoader.Instance.LookupNpcSprite(cha3.Name, cha3.Outfit, cha3.Mood);
+                flowScene.Illustration_NPC_Quartet_4 = SpriteLoader.Instance.LookupNpcSprite(cha4.Name, cha4.Outfit, cha4.Mood);
                 break;
             case EEventLayoutType.Team1to2:
                 cha1 = scene.Illustration_NPC_Team1to2_T1_1;
@@ -243,9 +244,9 @@ public class EventContainer
                 flowScene.IsLarge_Illustration_NPC_Team1to2_T1_1 = cha1.Large;
                 flowScene.IsLarge_Illustration_NPC_Team1to2_T2_1 = cha2.Large;
                 flowScene.IsLarge_Illustration_NPC_Team1to2_T2_2 = cha3.Large;
-                flowScene.Illustration_NPC_Team1to2_T1_1 = SpriteLoader.Instance.LookupSprite(cha1.Name, cha1.Outfit, cha1.Mood);
-                flowScene.Illustration_NPC_Team1to2_T2_1 = SpriteLoader.Instance.LookupSprite(cha2.Name, cha2.Outfit, cha2.Mood);
-                flowScene.Illustration_NPC_Team1to2_T2_2 = SpriteLoader.Instance.LookupSprite(cha3.Name, cha3.Outfit, cha3.Mood);
+                flowScene.Illustration_NPC_Team1to2_T1_1 = SpriteLoader.Instance.LookupNpcSprite(cha1.Name, cha1.Outfit, cha1.Mood);
+                flowScene.Illustration_NPC_Team1to2_T2_1 = SpriteLoader.Instance.LookupNpcSprite(cha2.Name, cha2.Outfit, cha2.Mood);
+                flowScene.Illustration_NPC_Team1to2_T2_2 = SpriteLoader.Instance.LookupNpcSprite(cha3.Name, cha3.Outfit, cha3.Mood);
                 break;
             case EEventLayoutType.Team2to1:
                 cha1 = scene.Illustration_NPC_Team2to1_T1_1;
@@ -254,9 +255,9 @@ public class EventContainer
                 flowScene.IsLarge_Illustration_NPC_Team2to1_T1_1 = cha1.Large;
                 flowScene.IsLarge_Illustration_NPC_Team2to1_T1_2 = cha2.Large;
                 flowScene.IsLarge_Illustration_NPC_Team2to1_T2_1 = cha3.Large;
-                flowScene.Illustration_NPC_Team2to1_T1_1 = SpriteLoader.Instance.LookupSprite(cha1.Name, cha1.Outfit, cha1.Mood);
-                flowScene.Illustration_NPC_Team2to1_T1_2 = SpriteLoader.Instance.LookupSprite(cha2.Name, cha2.Outfit, cha2.Mood);
-                flowScene.Illustration_NPC_Team2to1_T2_1 = SpriteLoader.Instance.LookupSprite(cha3.Name, cha3.Outfit, cha3.Mood);
+                flowScene.Illustration_NPC_Team2to1_T1_1 = SpriteLoader.Instance.LookupNpcSprite(cha1.Name, cha1.Outfit, cha1.Mood);
+                flowScene.Illustration_NPC_Team2to1_T1_2 = SpriteLoader.Instance.LookupNpcSprite(cha2.Name, cha2.Outfit, cha2.Mood);
+                flowScene.Illustration_NPC_Team2to1_T2_1 = SpriteLoader.Instance.LookupNpcSprite(cha3.Name, cha3.Outfit, cha3.Mood);
                 break;
             case EEventLayoutType.Team2to2:
                 cha1 = scene.Illustration_NPC_Team2to2_T1_1;
@@ -267,10 +268,10 @@ public class EventContainer
                 flowScene.IsLarge_Illustration_NPC_Team2to2_T1_2 = cha2.Large;
                 flowScene.IsLarge_Illustration_NPC_Team2to2_T2_1 = cha3.Large;
                 flowScene.IsLarge_Illustration_NPC_Team2to2_T2_2 = cha4.Large;
-                flowScene.Illustration_NPC_Team2to2_T1_1 = SpriteLoader.Instance.LookupSprite(cha1.Name, cha1.Outfit, cha1.Mood);
-                flowScene.Illustration_NPC_Team2to2_T1_2 = SpriteLoader.Instance.LookupSprite(cha2.Name, cha2.Outfit, cha2.Mood);
-                flowScene.Illustration_NPC_Team2to2_T2_1 = SpriteLoader.Instance.LookupSprite(cha3.Name, cha3.Outfit, cha3.Mood);
-                flowScene.Illustration_NPC_Team2to2_T2_2 = SpriteLoader.Instance.LookupSprite(cha4.Name, cha4.Outfit, cha4.Mood);
+                flowScene.Illustration_NPC_Team2to2_T1_1 = SpriteLoader.Instance.LookupNpcSprite(cha1.Name, cha1.Outfit, cha1.Mood);
+                flowScene.Illustration_NPC_Team2to2_T1_2 = SpriteLoader.Instance.LookupNpcSprite(cha2.Name, cha2.Outfit, cha2.Mood);
+                flowScene.Illustration_NPC_Team2to2_T2_1 = SpriteLoader.Instance.LookupNpcSprite(cha3.Name, cha3.Outfit, cha3.Mood);
+                flowScene.Illustration_NPC_Team2to2_T2_2 = SpriteLoader.Instance.LookupNpcSprite(cha4.Name, cha4.Outfit, cha4.Mood);
                 break;
             case EEventLayoutType.Team3to1:
                 cha1 = scene.Illustration_NPC_Team3to1_T1_1;
@@ -281,10 +282,10 @@ public class EventContainer
                 flowScene.IsLarge_Illustration_NPC_Team3to1_T1_2 = cha2.Large;
                 flowScene.IsLarge_Illustration_NPC_Team3to1_T1_3 = cha3.Large;
                 flowScene.IsLarge_Illustration_NPC_Team3to1_T2_1 = cha4.Large;
-                flowScene.Illustration_NPC_Team3to1_T1_1 = SpriteLoader.Instance.LookupSprite(cha1.Name, cha1.Outfit, cha1.Mood);
-                flowScene.Illustration_NPC_Team3to1_T1_2 = SpriteLoader.Instance.LookupSprite(cha2.Name, cha2.Outfit, cha2.Mood);
-                flowScene.Illustration_NPC_Team3to1_T1_3 = SpriteLoader.Instance.LookupSprite(cha3.Name, cha3.Outfit, cha3.Mood);
-                flowScene.Illustration_NPC_Team3to1_T2_1 = SpriteLoader.Instance.LookupSprite(cha4.Name, cha4.Outfit, cha4.Mood);
+                flowScene.Illustration_NPC_Team3to1_T1_1 = SpriteLoader.Instance.LookupNpcSprite(cha1.Name, cha1.Outfit, cha1.Mood);
+                flowScene.Illustration_NPC_Team3to1_T1_2 = SpriteLoader.Instance.LookupNpcSprite(cha2.Name, cha2.Outfit, cha2.Mood);
+                flowScene.Illustration_NPC_Team3to1_T1_3 = SpriteLoader.Instance.LookupNpcSprite(cha3.Name, cha3.Outfit, cha3.Mood);
+                flowScene.Illustration_NPC_Team3to1_T2_1 = SpriteLoader.Instance.LookupNpcSprite(cha4.Name, cha4.Outfit, cha4.Mood);
                 break;
             case EEventLayoutType.Team1to3:
                 cha1 = scene.Illustration_NPC_Team1to3_T1_1;
@@ -295,10 +296,10 @@ public class EventContainer
                 flowScene.IsLarge_Illustration_NPC_Team1to3_T2_1 = cha2.Large;
                 flowScene.IsLarge_Illustration_NPC_Team1to3_T2_2 = cha3.Large;
                 flowScene.IsLarge_Illustration_NPC_Team1to3_T2_3 = cha4.Large;
-                flowScene.Illustration_NPC_Team1to3_T1_1 = SpriteLoader.Instance.LookupSprite(cha1.Name, cha1.Outfit, cha1.Mood);
-                flowScene.Illustration_NPC_Team1to3_T2_1 = SpriteLoader.Instance.LookupSprite(cha2.Name, cha2.Outfit, cha2.Mood);
-                flowScene.Illustration_NPC_Team1to3_T2_2 = SpriteLoader.Instance.LookupSprite(cha3.Name, cha3.Outfit, cha3.Mood);
-                flowScene.Illustration_NPC_Team1to3_T2_3 = SpriteLoader.Instance.LookupSprite(cha4.Name, cha4.Outfit, cha4.Mood);
+                flowScene.Illustration_NPC_Team1to3_T1_1 = SpriteLoader.Instance.LookupNpcSprite(cha1.Name, cha1.Outfit, cha1.Mood);
+                flowScene.Illustration_NPC_Team1to3_T2_1 = SpriteLoader.Instance.LookupNpcSprite(cha2.Name, cha2.Outfit, cha2.Mood);
+                flowScene.Illustration_NPC_Team1to3_T2_2 = SpriteLoader.Instance.LookupNpcSprite(cha3.Name, cha3.Outfit, cha3.Mood);
+                flowScene.Illustration_NPC_Team1to3_T2_3 = SpriteLoader.Instance.LookupNpcSprite(cha4.Name, cha4.Outfit, cha4.Mood);
                 break;
         }
         GeneralManager.Instance.LogToFileOrConsole("[PromDate] Finished loading sprites.");
