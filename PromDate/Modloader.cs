@@ -74,6 +74,13 @@ public class Modloader : MonoBehaviour
 
     private void LoadModDll(FileInfo file)
     {
+        if (SteamManager.Initialized)
+        {
+            GeneralManager.Instance.LogToFileOrConsole("[PromDate] Turning off steam achievements as mod dll is installed.");
+            AccessTools.TypeByName("SteamAPI").GetMethod("Shutdown").Invoke(null, new object[0]);
+            SteamManager smInst = (SteamManager)typeof(SteamManager).GetField("Instance", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+            typeof(SteamManager).GetField("m_bInitialized", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(smInst, false);
+        }
         var assembly = Assembly.LoadFrom(file.FullName);
         var modType = assembly.GetType("Mod");
         gameObject.AddComponent(modType);
