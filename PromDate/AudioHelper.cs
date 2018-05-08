@@ -26,31 +26,35 @@ class AudioHelper : MonoBehaviour
     IEnumerator LoadAudioFiles()
     {
         GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loading in audio files.");
-        FileInfo[] files = (new DirectoryInfo(Application.dataPath + "/Mods/Audio")).GetFiles("*.*").Where(f => f.Name.ToLower().EndsWith(".ogg") || f.Name.ToLower().EndsWith(".mp3") || f.Name.ToLower().EndsWith(".wav") || f.Name.ToLower().EndsWith(".xm") || f.Name.ToLower().EndsWith(".it") || f.Name.ToLower().EndsWith(".mod") || f.Name.ToLower().EndsWith(".s3m")).ToArray();
-        foreach (FileInfo file in files)
+        string[] directories = Directory.GetDirectories(Application.dataPath + "/Mods");
+        foreach (string directory in directories)
         {
-            WWW www = new WWW("file:///" + file.FullName);
-            yield return www;
-            if (www.error != null)
+            FileInfo[] files = (new DirectoryInfo(directory + "/Audio")).GetFiles("*.*").Where(f => f.Name.ToLower().EndsWith(".ogg") || f.Name.ToLower().EndsWith(".mp3") || f.Name.ToLower().EndsWith(".wav") || f.Name.ToLower().EndsWith(".xm") || f.Name.ToLower().EndsWith(".it") || f.Name.ToLower().EndsWith(".mod") || f.Name.ToLower().EndsWith(".s3m")).ToArray();
+            foreach (FileInfo file in files)
             {
-                GeneralManager.Instance.LogToFileOrConsole(www.error);
+                WWW www = new WWW("file:///" + file.FullName);
+                yield return www;
+                if (www.error != null)
+                {
+                    GeneralManager.Instance.LogToFileOrConsole(www.error);
+                }
+                AudioClip clip = www.GetAudioClip(false, false);
+                clip.LoadAudioData();
+                clip.name = file.Name.Split('.')[0];
+                while (clip.loadState == AudioDataLoadState.Loading || clip.loadState == AudioDataLoadState.Unloaded)
+                    yield return 0;
+                string category;
+                if (clip.name.Split('_').Length > 1)
+                {
+                    category = clip.name.Split('_')[0].ToUpper();
+                }
+                else
+                {
+                    category = "VOICE";
+                }
+                AudioItem audioItem = AudioController.AddToCategory(AudioController.GetCategory(category), clip, clip.name);
+                ((Dictionary<string, AudioItem>)typeof(AudioController).GetField("_audioItems", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(AudioController.Instance)).Add(audioItem.Name, audioItem);
             }
-            AudioClip clip = www.GetAudioClip(false, false);
-            clip.LoadAudioData();
-            clip.name = file.Name.Split('.')[0];
-            while (clip.loadState == AudioDataLoadState.Loading || clip.loadState == AudioDataLoadState.Unloaded)
-                yield return 0;
-            string category;
-            if (clip.name.Split('_').Length > 1)
-            {
-                category = clip.name.Split('_')[0].ToUpper();
-            }
-            else
-            {
-                category = "VOICE";
-            }
-            AudioItem audioItem = AudioController.AddToCategory(AudioController.GetCategory(category), clip, clip.name);
-            ((Dictionary<string, AudioItem>)typeof(AudioController).GetField("_audioItems", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(AudioController.Instance)).Add(audioItem.Name, audioItem);
         }
     }
 }

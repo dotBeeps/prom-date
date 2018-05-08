@@ -43,7 +43,7 @@ namespace PromDateInstaller
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            Installer.InstallPromDate(fileBox.Text, urlDropdown.SelectedText);
+            Installer.InstallPromDate(fileBox.Text, releaseNumbers[urlDropdown.SelectedIndex]);
             status.Text = "Installed!";
         }
 

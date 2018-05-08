@@ -68,7 +68,7 @@ class SpriteLoader : MonoBehaviour
         return customSprites.First(s => s.name.ToLower() == spriteName.ToLower());
     }
 
-    public Sprite LookupEndingBG(string spriteName)
+    public Sprite LookupBG(string spriteName)
     {
         Sprite sprite = customSprites.First(s => s.name.ToLower() == spriteName.ToLower());
         if (sprite == null)
@@ -80,34 +80,38 @@ class SpriteLoader : MonoBehaviour
 
     private void LoadSprites()
     {
-        FileInfo[] files = (new DirectoryInfo(Application.dataPath + "/Mods/Characters")).GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
-        foreach (FileInfo file in files)
+        string[] directories = Directory.GetDirectories(Application.dataPath + "/Mods");
+        foreach (string directory in directories)
         {
-            string[] spriteName = file.Name.Split('.')[0].Split('_');
-            SpriteInfo spriteInfo = new SpriteInfo();
-            spriteInfo.CharName = spriteName[0].ToUpper();
-            Sprite sprite;
-            if (spriteName[1].ToLower().Contains("speaking"))
+            FileInfo[] files = (new DirectoryInfo(directory + "/Characters")).GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
+            foreach (FileInfo file in files)
             {
-                spriteInfo.Outfit = 0;
-                spriteInfo.Mood = "sticker";
-                sprite = LoadStickerFromFile(file.FullName, file.Name.Split('.')[0]);
+                string[] spriteName = file.Name.Split('.')[0].Split('_');
+                SpriteInfo spriteInfo = new SpriteInfo();
+                spriteInfo.CharName = spriteName[0].ToUpper();
+                Sprite sprite;
+                if (spriteName[1].ToLower().Contains("speaking"))
+                {
+                    spriteInfo.Outfit = 0;
+                    spriteInfo.Mood = "sticker";
+                    sprite = LoadStickerFromFile(file.FullName, file.Name.Split('.')[0]);
+                }
+                else
+                {
+                    spriteInfo.Outfit = int.Parse(spriteName[1]);
+                    spriteInfo.Mood = spriteName[2].ToLower();
+                    sprite = LoadSpriteFromFile(file.FullName, file.Name.Split('.')[0]);
+                }
+                customNpcSprites.Add(spriteInfo, sprite);
             }
-            else
-            {
-                spriteInfo.Outfit = int.Parse(spriteName[1]);
-                spriteInfo.Mood = spriteName[2].ToLower();
-                sprite = LoadSpriteFromFile(file.FullName, file.Name.Split('.')[0]);
-            }
-            customNpcSprites.Add(spriteInfo, sprite);
-        }
 
-        files = (new DirectoryInfo(Application.dataPath + "/Mods/Images")).GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
-        foreach (FileInfo file in files)
-        {
-            string spriteName = Path.GetFileNameWithoutExtension(file.Name);
-            Sprite sprite = LoadSpriteFromFile(file.FullName, spriteName);
-            customSprites.Add(sprite);
+            files = (new DirectoryInfo(directory + "/Images")).GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
+            foreach (FileInfo file in files)
+            {
+                string spriteName = Path.GetFileNameWithoutExtension(file.Name);
+                Sprite sprite = LoadSpriteFromFile(file.FullName, spriteName);
+                customSprites.Add(sprite);
+            }
         }
     }
 

@@ -76,21 +76,24 @@ class EventHelper : MonoBehaviour
 
     public void LoadNewEvents()
     {
-        string path = Application.dataPath + "/Mods/Events/";
-        string[] files = Directory.GetFiles(path, "*.xml");
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(EventContainer));
         List<EventManager.CEventFlow> list = new List<EventManager.CEventFlow>();
         int num = 0;
-        foreach (string text in files)
+        string[] directories = Directory.GetDirectories(Application.dataPath + "/Mods");
+        foreach (string directory in directories)
         {
-            GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loading event from " + text, false, false);
-            EventContainer eventContainer = EventContainer.Load(text);
-            GeneralManager.Instance.LogToFileOrConsole("[PromDate] File has " + eventContainer.Events.Count + " events.");
-            foreach (Event eve in eventContainer.Events)
+            string[] files = Directory.GetFiles(directory + "/Events", "*.xml");
+            foreach (string text in files)
             {
-                GeneralManager.Instance.LogToFileOrConsole("\t[PromDate] Loading event " + eve.Name, false, false);
-                list.Add(EventContainer.eventToFlow(eve, EventManager.Instance.Events.Length + num));
-                num++;
+                GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loading event from " + text, false, false);
+                EventContainer eventContainer = EventContainer.Load(text);
+                GeneralManager.Instance.LogToFileOrConsole("[PromDate] File has " + eventContainer.Events.Count + " events.");
+                foreach (Event eve in eventContainer.Events)
+                {
+                    GeneralManager.Instance.LogToFileOrConsole("\t[PromDate] Loading event " + eve.Name, false, false);
+                    list.Add(EventContainer.eventToFlow(eve, EventManager.Instance.Events.Length + num));
+                    num++;
+                }
             }
         }
         EventManager.Instance.Events = EventManager.Instance.Events.Concat(list.ToArray()).ToArray<EventManager.CEventFlow>();

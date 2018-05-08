@@ -21,7 +21,7 @@ namespace PromDate.Installer
             return releases;
         }
 
-        public static void InstallPromDate(string path, string downloadVersion)
+        public static void InstallPromDate(string path, Release downloadVersion)
         {
             UninstallPromDate(path);
 
@@ -32,7 +32,7 @@ namespace PromDate.Installer
 
             WebClient webClient = new WebClient();
             webClient.Headers["user-agent"] = "Mozilla / 5.0(Windows NT 6.1; WOW64; rv: 40.0) Gecko / 20100101 Firefox / 40.1";
-            string downloadUrl = releases.First(release => release.TagName == downloadVersion).Assets[0].BrowserDownloadUrl;
+            string downloadUrl = downloadVersion.Assets.First(asset => asset.Name.Contains("PromDate-v")).BrowserDownloadUrl;
             webClient.DownloadFile(new Uri(downloadUrl), zip);
             if (Directory.Exists(extract))
                 Directory.Delete(extract);

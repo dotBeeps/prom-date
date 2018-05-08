@@ -37,16 +37,19 @@ class ShopHelper : MonoBehaviour
 
     private void LoadItemsFromFile()
     {
-        string path = Application.dataPath + "/Mods/Items/";
-        string[] files = Directory.GetFiles(path, "*.xml");
-        XmlSerializer xmlSerializer = new XmlSerializer(typeof(EndingContainer));
-        foreach (string file in files)
+               XmlSerializer xmlSerializer = new XmlSerializer(typeof(EndingContainer));
+        string[] directories = Directory.GetDirectories(Application.dataPath + "/Mods");
+        foreach (string directory in directories)
         {
-            GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loading ending conditions from " + file);
-            ItemContainer itemContainer = ItemContainer.Load(file);
-            foreach (Item item in itemContainer.Items)
+            string[] files = Directory.GetFiles(directory + "/Items", "*.xml");
+            foreach (string file in files)
             {
-                AddShopItem(item.Name, item.Price, item.DescriptionTitle, item.Description, item.ShopkeeperMood, SpriteLoader.Instance.LookupCustomSprite(item.SmallSprite), SpriteLoader.Instance.LookupCustomSprite(item.LargeSprite), item.EventItem);
+                GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loading items from " + file);
+                ItemContainer itemContainer = ItemContainer.Load(file);
+                foreach (Item item in itemContainer.Items)
+                {
+                    AddShopItem(item.Name, item.Price, item.DescriptionTitle, item.Description, item.ShopkeeperMood, SpriteLoader.Instance.LookupCustomSprite(item.SmallSprite), SpriteLoader.Instance.LookupCustomSprite(item.LargeSprite), item.EventItem);
+                }
             }
         }
     }

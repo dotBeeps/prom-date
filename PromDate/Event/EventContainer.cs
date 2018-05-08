@@ -45,7 +45,7 @@ public class EventContainer
             }
             if (ev.EventScenes[i].Illustration_BG != "")
             {
-                flow.EventScenes[i].Illustration_BG = SpriteLoader.Instance.LookupCustomSprite(ev.EventScenes[i].Illustration_FG);
+                flow.EventScenes[i].Illustration_BG = SpriteLoader.Instance.LookupBG(ev.EventScenes[i].Illustration_BG);
             }
             if (ev.EventScenes[i].Illustration_FG != "")
             {
