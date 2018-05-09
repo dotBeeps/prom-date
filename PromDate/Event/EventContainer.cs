@@ -97,10 +97,10 @@ public class EventContainer
         {
             flow.TopicTags = ev.TopicTags.ToArray();
         }
-        if (ev.ArgumentTags != null)
-        {
-            flow.ArgumentTags = ev.ArgumentTags.ToArray();
-        }
+
+        ev.ArgumentTags.Add("MOD");
+        flow.ArgumentTags = ev.ArgumentTags.ToArray();
+
         if (ev.CharacterTags != null)
         {
             flow.CharacterTags = ev.CharacterTags.ToArray();

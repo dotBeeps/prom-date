@@ -86,4 +86,12 @@ public class Modloader : MonoBehaviour
         gameObject.AddComponent(modType);
         GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loaded dll mod: " + file.Name);
     }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown("k"))
+        {
+            ProgressTracker.SaveModProgress();
+        }
+    }
 }

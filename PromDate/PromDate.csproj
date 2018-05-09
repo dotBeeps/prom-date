@@ -99,6 +99,12 @@
     <Compile Include="Harmony\Transpilers.cs" />
     <Compile Include="ModConstants.cs" />
     <Compile Include="Modloader.cs" />
+    <Compile Include="Patches\GeneralManager_RegisterProgress_SecretEnding_Patch.cs" />
+    <Compile Include="Patches\GeneralManager_RegisterProgress_SeenEvent_Patch.cs" />
+    <Compile Include="Patches\MapNavigation_CoStartResultsPage_Patch.cs" />
+    <Compile Include="Patches\SaveDataManager_LoadProgress_Patch.cs" />
+    <Compile Include="Patches\SaveDataManager_SaveProgress_Patch.cs" />
+    <Compile Include="ProgressTracker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Event\Scene.cs" />
     <Compile Include="ShopHelper.cs" />
