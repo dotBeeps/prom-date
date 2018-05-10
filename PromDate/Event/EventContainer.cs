@@ -25,11 +25,11 @@ public class EventContainer
         return result;
     }
 
-    public static EventManager.CEventFlow eventToFlow(Event ev, int eventIndex)
+    public static EventManager.CEventFlow eventToFlow(Event ev)
     {
         EventManager.CEventFlow flow = new EventManager.CEventFlow();
 
-        flow.EventName = eventIndex + ": " + ev.Name;
+        flow.EventName = ev.Name;
         flow.EventType = (EEventType)Enum.Parse(typeof(EEventType), ev.Type);
         flow.Location = (ESchoolLocation)Enum.Parse(typeof(ESchoolLocation), ev.Location);
         flow.EventScenes = new EventManager.CEventFlow.CEventScene[ev.EventScenes.Count];
@@ -104,7 +104,7 @@ public class EventContainer
         if (ev.CharacterTags != null)
         {
             flow.CharacterTags = ev.CharacterTags.ToArray();
-            ev.CharacterTags.ForEach(cha => { if (!ModConstants.VANILLA_CHARACTERS.Contains(cha)) EventHelper.Instance.AddCharacter(cha); });
+            ev.CharacterTags.ForEach(cha => { if (!ModConstants.VANILLA_CHARACTERS.Contains(cha)) EventHelper.AddCharacter(cha); });
         }
         if (ev.EventRestrictions != null)
         {
@@ -145,10 +145,10 @@ public class EventContainer
             flow.ContinuityData.Initialized = ev.ContinuityData.Initialized;
             flow.ContinuityData.IsContinuityRoot = ev.ContinuityData.IsContinuityRoot;
             flow.ContinuityData.ContinuityEventLengthFromThisNode = ev.ContinuityData.ContinuityEventLengthFromThisNode;
-            flow.ContinuityData.Option1Success_ContinuityIndex = eventIndex + ev.ContinuityData.Option1SuccessContinuityIndex;
-            flow.ContinuityData.Option1Failure_ContinuityIndex = eventIndex + ev.ContinuityData.Option1FailureContinuityIndex;
-            flow.ContinuityData.Option2Success_ContinuityIndex = eventIndex + ev.ContinuityData.Option2SuccessContinuityIndex;
-            flow.ContinuityData.Option2Failure_ContinuityIndex = eventIndex + ev.ContinuityData.Option2FailureContinuityIndex;
+            flow.ContinuityData.Option1Success_ContinuityIndex = ev.ContinuityData.Option1SuccessContinuityIndex;
+            flow.ContinuityData.Option1Failure_ContinuityIndex = ev.ContinuityData.Option1FailureContinuityIndex;
+            flow.ContinuityData.Option2Success_ContinuityIndex = ev.ContinuityData.Option2SuccessContinuityIndex;
+            flow.ContinuityData.Option2Failure_ContinuityIndex = ev.ContinuityData.Option2FailureContinuityIndex;
             flow.ContinuityData.Option1Success_IsSelfContinuity = ev.ContinuityData.Option1SuccessIsSelfContinuity;
             flow.ContinuityData.Option1Failure_IsSelfContinuity = ev.ContinuityData.Option1FailureIsSelfContinuity;
             flow.ContinuityData.Option2Success_IsSelfContinuity = ev.ContinuityData.Option2SuccessIsSelfContinuity;

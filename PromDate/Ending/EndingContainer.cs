@@ -24,13 +24,15 @@ public class EndingContainer
         return result;
     }
     
-    public static EventManager.CSecretEndingConditions convertEndingConditions(Ending ending)
+    public static EventManager.CSecretEndingConditions convertEndingConditions(Ending ending, CustomEventMod mod)
     {
         List<int> eventsRequired = new List<int>();
         foreach (string req in ending.EventsRequired)
         {
-            eventsRequired.Add(EventManager.Instance.Events.TakeWhile(ev => !ev.EventName.Contains(req)).Count());
+            string required = EventHelper.AppendModName(req, mod);
+            eventsRequired.Add(EventManager.Instance.Events.TakeWhile(ev => !ev.EventName.Contains(required)).Count());
         }
+        ending.SecretEndingName = EventHelper.AppendModName(ending.SecretEndingName, mod);
         int secretEndingIndex = EventManager.Instance.Events.TakeWhile(ev => !ev.EventName.Contains(ending.SecretEndingName)).Count();
 
         EventManager.CSecretEndingConditions endingConditions = new EventManager.CSecretEndingConditions(ending.SecretEndingName, secretEndingIndex, eventsRequired.ToArray(), ending.ChoicesNeeded.Select(a => a.Choices.Select(str => (EEventChoiceSelected)Enum.Parse(typeof(EEventChoiceSelected), str)).ToArray()).ToArray(), ending.NpcsChosenForProm.ToArray(), ending.NpcRestriction, ending.LovePointsNeededWithNpc, ending.ContinuitySuccessNeeded);

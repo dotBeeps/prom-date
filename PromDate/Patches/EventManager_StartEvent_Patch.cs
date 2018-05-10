@@ -11,7 +11,7 @@ class EventManager_StartEvent_Patch
 {
     static void Prefix(ref int aEventIndex)
     {
-        EventHelper.Instance.EventId = aEventIndex;
+        EventHelper.EventId = aEventIndex;
     }
 }
 

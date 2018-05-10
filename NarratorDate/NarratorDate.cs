@@ -6,14 +6,14 @@ public class Mod : MonoBehaviour
 {
     private float narratorTalking;
     private bool trackNarrator = false;
-    private EventHelper.EventArgs narratorEvent;
+    private EventLoader.EventArgs narratorEvent;
 
     public Mod()
     {
-        narratorEvent = new EventHelper.EventArgs();
+        narratorEvent = new EventLoader.EventArgs();
         narratorEvent.name = "NarratorNotice";
         narratorEvent.turnType = NGameConstants.ETurnType.School;
-        EventHelper.Instance.AddToModEvents(narratorEvent);
+        EventLoader.Instance.AddToModEvents(narratorEvent);
         SceneManager.activeSceneChanged += this.OnSceneLoaded;
         GeneralManager.Instance.LogToFileOrConsole("[NarratorDate] Loaded in.");
     }
@@ -32,7 +32,7 @@ public class Mod : MonoBehaviour
 
                 if (narratorTalking > 30f)
                 {
-                    EventHelper.Instance.RequestModEvent(narratorEvent);
+                    EventLoader.Instance.RequestModEvent(narratorEvent);
                     trackNarrator = false;
                 }
             }

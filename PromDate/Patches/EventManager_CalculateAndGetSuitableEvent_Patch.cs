@@ -15,7 +15,7 @@ public static class EventManager_CalculateAndGetSuitableEvent_Patch
 
     public static bool Prefix(ref int __result)
     {
-        int modEventToTakeControl = EventHelper.Instance.CheckModEvents();
+        int modEventToTakeControl = EventLoader.Instance.CheckModEvents();
         if (modEventToTakeControl != -1)
         {
             __result = modEventToTakeControl;

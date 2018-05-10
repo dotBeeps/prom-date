@@ -1,52 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NGameConstants;
 using System.Linq;
-using System.Text;
 using System.Reflection;
-using UnityEngine;
-using NGameConstants;
-using System.IO;
-using System.Xml.Serialization;
-using UnityEngine.SceneManagement;
 
-public class EventHelper : MonoBehaviour
+public static class EventHelper
 {
+    private static EventManager.CEventFlow cEvent;
+    private static int eId;
 
-    private EventManager.CEventFlow cEvent;
-    private int eId;
-
-    public static EventHelper Instance;
-    public Dictionary<EventArgs, bool> potentialEvents;
-
-    public struct EventArgs
-    {
-        public string name;
-        public NGameConstants.ETurnType turnType;
-    }
-
-    public EventManager.CEventFlow CurrentEvent
+    public static EventManager.CEventFlow CurrentEvent
     {
         get { return cEvent; }
-        set { cEvent = value;
+        set
+        {
+            cEvent = value;
             eId = EventManager.Instance.Events.TakeWhile(ev => ev != value).Count();
         }
     }
-    public int EventId
+    public static int EventId
     {
         get { return eId; }
-        set { eId = value;
+        set
+        {
+            eId = value;
             cEvent = EventManager.Instance.Events[value];
         }
     }
 
-    public int SceneIndex
+    public static int SceneIndex
     {
         get { return (int)typeof(EventManager).GetField("mEventSceneCounter", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(EventManager.Instance); }
     }
 
-    public string CurrentSpeaker
+    public static string CurrentSpeaker
     {
-        get {
+        get
+        {
             if (CurrentEvent != null)
                 if (SceneIndex < cEvent.EventScenes.Length)
                     return cEvent.EventScenes[SceneIndex].WhoSpeaksNPC;
@@ -54,85 +42,15 @@ public class EventHelper : MonoBehaviour
         }
     }
 
-    public EventHelper()
+    public static string AppendModName(string from, CustomEventMod mod)
     {
-        if (Instance != null)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-            potentialEvents = new Dictionary<EventArgs, bool>();
-        }
+        return from + "_" + mod.Name.Replace(' ', '_');
     }
 
-    public void AddCharacter(string name, bool lovable = false, bool minor = false, bool speaker = true)
+    public static void AddCharacter(string name, bool lovable = false, bool minor = false, bool speaker = true)
     {
         if (lovable && !GameConstants.LovableNpcs.Contains(name.ToUpper())) GameConstants.LovableNpcs = GameConstants.LovableNpcs.Concat(new string[] { name.ToUpper() }).ToArray();
         if (minor && !GameConstants.LovableNpcs.Contains(name.ToUpper())) GameConstants.MinorNpcs = GameConstants.MinorNpcs.Concat(new string[] { name.ToUpper() }).ToArray();
         if (speaker && !GameConstants.LovableNpcs.Contains(name.ToUpper())) GameConstants.NpcSpeakers = GameConstants.NpcSpeakers.Concat(new string[] { name.ToUpper() }).ToArray();
-    }
-
-    public void LoadNewEvents()
-    {
-        XmlSerializer xmlSerializer = new XmlSerializer(typeof(EventContainer));
-        List<EventManager.CEventFlow> list = new List<EventManager.CEventFlow>();
-        int num = 0;
-        string[] directories = Directory.GetDirectories(Application.dataPath + "/Mods");
-        foreach (string directory in directories)
-        {
-            string[] files = Directory.GetFiles(directory + "/Events", "*.xml");
-            foreach (string text in files)
-            {
-                GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loading event from " + text, false, false);
-                EventContainer eventContainer = EventContainer.Load(text);
-                GeneralManager.Instance.LogToFileOrConsole("[PromDate] File has " + eventContainer.Events.Count + " events.");
-                foreach (Event eve in eventContainer.Events)
-                {
-                    GeneralManager.Instance.LogToFileOrConsole("\t[PromDate] Loading event " + eve.Name, false, false);
-                    list.Add(EventContainer.eventToFlow(eve, EventManager.Instance.Events.Length + num));
-                    num++;
-                }
-            }
-        }
-        EventManager.Instance.Events = EventManager.Instance.Events.Concat(list.ToArray()).ToArray<EventManager.CEventFlow>();
-    }
-
-    public int CheckModEvents()
-    {
-        GeneralManager.Instance.LogToFileOrConsole("[PromDate] Checking if any mod events want to take control.");
-        List<EventArgs> wantToPlay = new List<EventArgs>();
-        int idToPlay = -1;
-        foreach (KeyValuePair<EventArgs, bool> pair in EventHelper.Instance.potentialEvents)
-        {
-            if (pair.Value && GameManager.Instance.GetCurrentTurnType() == pair.Key.turnType)
-            {
-                GeneralManager.Instance.LogToFileOrConsole("[PromDate] Getting id for event: " + pair.Key);
-                wantToPlay.Add(pair.Key);
-            }
-        }
-        if (wantToPlay.Count > 0)
-        {
-            GeneralManager.Instance.LogToFileOrConsole("[PromDate] Selecting random mod event.");
-            EventArgs eventToPlay = wantToPlay[UnityEngine.Random.Range(0, wantToPlay.Count - 1)];
-            int eventId = EventManager.Instance.Events.TakeWhile(ev => !ev.EventName.Contains(eventToPlay.name)).Count();
-            GeneralManager.Instance.LogToFileOrConsole("[PromDate] Selected event: " + eventToPlay + " with id: " + eventId);
-            EventHelper.Instance.potentialEvents[eventToPlay] = false;
-            idToPlay = eventId;
-        }
-        return idToPlay;
-    }
-
-    public void AddToModEvents(EventArgs ev)
-    {
-        GeneralManager.Instance.LogToFileOrConsole("[PromDate] Added new event: " + ev.name);
-        potentialEvents.Add(ev, false);
-    }
-
-    public void RequestModEvent(EventArgs ev)
-    {
-        GeneralManager.Instance.LogToFileOrConsole("[PromDate] Event requested: " + ev);
-        potentialEvents[ev] = true;
     }
 }

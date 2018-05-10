@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 public class Modloader : MonoBehaviour
 {
     public static Modloader Instance;
-    private List<string> loadedDllMods = new List<string>();
+    private List<Mod> loadedMods = new List<Mod>();
 
     public Modloader()
     {
@@ -26,23 +26,24 @@ public class Modloader : MonoBehaviour
             Instance = this;
 
             GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loading in the special sauce.");
-
-            gameObject.AddComponent(typeof(AudioHelper));
-            gameObject.AddComponent(typeof(SpriteLoader));
-            gameObject.AddComponent(typeof(EventHelper));
-            gameObject.AddComponent(typeof(EndingHelper));
-            gameObject.AddComponent(typeof(ShopHelper));
-
             var harmony = HarmonyInstance.Create("com.foolishdave.monsterprom.promdate");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
-
-            LoadOtherMods();
-            SceneManager.activeSceneChanged += this.OnSceneLoaded;
+            AddMod(typeof(EventLoaderMod));
+            LoadMods();
             GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loaded the special sauce ( ͡° ͜ʖ ͡°)");
         }
     }
 
-    private void LoadOtherMods()
+    public string GenerateMultiplayerPassword()
+    {
+        string password = "moddedGame-";
+        password = string.Concat(password, string.Join("", loadedMods.Select(mod => mod.Name).ToArray())) + "-";
+        password = string.Concat(password, string.Join("", EventLoader.Instance.customEventMods.Select(mod => mod.Name).ToArray()));
+
+        return "modded";
+    }
+
+    private void LoadMods()
     {
         FileInfo[] files = (new DirectoryInfo(Application.dataPath + "/Mods")).GetFiles("*.dll");
         foreach (FileInfo file in files)
@@ -54,21 +55,8 @@ public class Modloader : MonoBehaviour
             }
             catch
             {
-                GeneralManager.Instance.LogToFileOrConsole("[PromDate] Failed to load in " + file);
+                GeneralManager.Instance.LogToFileOrConsole("[PromDate] Failed to load in " + file.FullName);
             }
-        }
-    }
-
-    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene oldScene, UnityEngine.SceneManagement.Scene newScene)
-    {
-        if (GeneralManager.Instance.IsInOnlineMode)
-        {
-            GeneralManager.Instance.LogToFileOrConsole("[PromDate] Hope all of you have the mod installed, online support is basically nonexistent at the moment!");
-        }
-        if (newScene.name == "InGame_School")
-        {
-            EventHelper.Instance.LoadNewEvents();
-            EndingHelper.Instance.LoadNewEndings();
         }
     }
 
@@ -81,17 +69,31 @@ public class Modloader : MonoBehaviour
             SteamManager smInst = (SteamManager)typeof(SteamManager).GetField("Instance", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
             typeof(SteamManager).GetField("m_bInitialized", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(smInst, false);
         }
+
         var assembly = Assembly.LoadFrom(file.FullName);
-        var modType = assembly.GetType("Mod");
-        gameObject.AddComponent(modType);
-        GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loaded dll mod: " + file.Name);
+        var modType = assembly.GetTypes().Where(type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(Mod))).FirstOrDefault();
+        if (modType == null)
+        {
+            GeneralManager.Instance.LogToFileOrConsole("[PromDate] Failed to load dll mod: " + file.Name + " - no class extending Mod.");
+        }
+        else
+        {
+            AddMod(modType);
+        }
     }
 
-    public void Update()
+    private void AddMod(Type mod)
     {
-        if (Input.GetKeyDown("k"))
+        var component = gameObject.AddComponent(mod);
+        Mod newMod = (Mod)GetComponent(mod);
+
+        if (string.IsNullOrEmpty(newMod.Name))
         {
-            ProgressTracker.SaveModProgress();
+            Destroy(component);
+        }
+        else
+        {
+            loadedMods.Add(newMod);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using UnityEngine;
+using static EventManager;
 
 class EndingHelper : MonoBehaviour
 {
@@ -41,13 +42,19 @@ class EndingHelper : MonoBehaviour
         return finalScenes.First(sce => sce.FromPromScene == endingIndex);
     }
 
-    public void LoadNewEndings()
+    public void LoadModEndings()
     {
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(EndingContainer));
-        List<EventManager.CSecretEndingConditions> endings = new List<EventManager.CSecretEndingConditions>();
         string[] directories = Directory.GetDirectories(Application.dataPath + "/Mods");
+        List<CSecretEndingConditions> modEndingConditions = new List<CSecretEndingConditions>();
+        finalScenes.Clear();
+        modEndings.Clear();
         foreach (string directory in directories)
         {
+            string modInfo = Directory.GetFiles(directory, "*.xml").FirstOrDefault();
+            if (string.IsNullOrEmpty(modInfo)) continue;
+            CustomEventMod mod = CustomEventMod.Load(modInfo);
+            if (!EventLoader.Instance.customEventMods.Any(m => m.Name == mod.Name)) continue;
             string[] files = Directory.GetFiles(directory + "/EndingConditions", "*.xml");
             foreach (string file in files)
             {
@@ -56,8 +63,8 @@ class EndingHelper : MonoBehaviour
                 foreach (Ending ending in endingContainer.Endings)
                 {
                     GeneralManager.Instance.LogToFileOrConsole("\t[PromDate] Loading ending " + ending.SecretEndingName);
-                    EventManager.CSecretEndingConditions endCond = EndingContainer.convertEndingConditions(ending);
-                    endings.Add(endCond);
+                    EventManager.CSecretEndingConditions endCond = EndingContainer.convertEndingConditions(ending, mod);
+                    modEndingConditions.Add(endCond);
                     modEndings.Add(EventManager.Instance.Events[endCond.cSecretEndingIndex]);
                     FinalSceneInfo sceneInfo = new FinalSceneInfo() { FromPromScene = endCond.cSecretEndingIndex, SceneId = endCond.cSecretEndingIndex + 1 };
                     if (EventManager.Instance.Events[endCond.cSecretEndingIndex].ArgumentTags.Any(arg => arg.Contains("SFX")))
@@ -68,7 +75,7 @@ class EndingHelper : MonoBehaviour
                 }
             }
         }
-        EventManager.Instance.SecretEndingsConditions = EventManager.Instance.SecretEndingsConditions.Concat(endings.ToArray()).ToArray();
+        EventManager.Instance.SecretEndingsConditions = EventManager.Instance.SecretEndingsConditions.Concat(modEndingConditions.ToArray()).ToArray();
     }
 }
 

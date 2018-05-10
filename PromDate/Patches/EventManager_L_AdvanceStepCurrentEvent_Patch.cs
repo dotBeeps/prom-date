@@ -31,12 +31,12 @@ public static class EventManager_L_AdvanceStepCurrentEvent_Patch
     static void Postfix()
     {
         FieldInfo stickerField = typeof(EventManager).GetField("WhoSpeaksSticker");
-        if (EventHelper.Instance.CurrentSpeaker != null && EventHelper.Instance.CurrentSpeaker != "")
+        if (EventHelper.CurrentSpeaker != null && EventHelper.CurrentSpeaker != "")
         {
-            if (!ModConstants.VANILLA_CHARACTERS.Contains(EventHelper.Instance.CurrentSpeaker.ToUpper()))
+            if (!ModConstants.VANILLA_CHARACTERS.Contains(EventHelper.CurrentSpeaker.ToUpper()))
             {
                 UI2DSprite stickerSprite2d = (UI2DSprite)stickerField.GetValue(EventManager.Instance);
-                Sprite sprite = SpriteLoader.Instance.ModTalkingSprite(EventHelper.Instance.CurrentSpeaker);
+                Sprite sprite = SpriteLoader.Instance.ModTalkingSprite(EventHelper.CurrentSpeaker);
                 stickerSprite2d.sprite2D = sprite;
             }
         }
