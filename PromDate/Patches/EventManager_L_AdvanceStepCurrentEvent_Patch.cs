@@ -1,4 +1,6 @@
 ﻿using Harmony;
+using PromDate;
+using PromDate.EventLoader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +38,7 @@ public static class EventManager_L_AdvanceStepCurrentEvent_Patch
             if (!ModConstants.VANILLA_CHARACTERS.Contains(EventHelper.CurrentSpeaker.ToUpper()))
             {
                 UI2DSprite stickerSprite2d = (UI2DSprite)stickerField.GetValue(EventManager.Instance);
-                Sprite sprite = SpriteLoader.Instance.ModTalkingSprite(EventHelper.CurrentSpeaker);
+                Sprite sprite = SpriteHelper.ModTalkingSprite(EventHelper.CurrentSpeaker);
                 stickerSprite2d.sprite2D = sprite;
             }
         }

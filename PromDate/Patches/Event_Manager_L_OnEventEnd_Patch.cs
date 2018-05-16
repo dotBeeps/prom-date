@@ -1,5 +1,6 @@
 ﻿using Harmony;
 using NGameConstants;
+using PromDate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,10 @@ class Event_Manager_L_OnEventEnd_Patch
 {
     static bool Prefix(ref int aEventEnded)
     {
-        if (EndingHelper.Instance.IsModEnding(aEventEnded))
+        if (EndingHelper.IsModEnding(aEventEnded))
         {
             AudioController.Play("Game_SuccessEnding");
-            EndingHelper.FinalSceneInfo info = EndingHelper.Instance.GetFinalSceneInfo(aEventEnded);
+            EndingHelper.FinalSceneInfo info = EndingHelper.GetFinalSceneInfo(aEventEnded);
             if (info.AudioClip != null && info.AudioClip != "")
             {
                 AudioController.Play(info.AudioClip);

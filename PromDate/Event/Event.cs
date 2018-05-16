@@ -19,7 +19,7 @@ public class Event
 
 	
 	[XmlArray("EventScenes", IsNullable = true)]
-	public List<Scene> EventScenes = new List<Scene>();
+	public List<ModScene> EventScenes = new List<ModScene>();
 
 	
 	[DefaultValue(9999)]

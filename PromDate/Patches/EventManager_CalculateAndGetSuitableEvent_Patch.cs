@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using PromDate.EventLoader;
 using System;
 using System.Collections.Generic;
 
@@ -15,7 +16,7 @@ public static class EventManager_CalculateAndGetSuitableEvent_Patch
 
     public static bool Prefix(ref int __result)
     {
-        int modEventToTakeControl = EventLoader.Instance.CheckModEvents();
+        int modEventToTakeControl = EventLoader.CheckModEvents();
         if (modEventToTakeControl != -1)
         {
             __result = modEventToTakeControl;

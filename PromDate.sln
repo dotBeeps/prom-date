@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromDateInjector", "PromDat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromDateInstaller", "PromDateInstaller\PromDateInstaller.csproj", "{853BF82F-EB89-4310-AA65-0590E1AE9182}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonsterPromDiscordRPC", "MonsterPromDiscordRPC\MonsterPromDiscordRPC.csproj", "{DEBB5305-5B59-465D-894A-17912B015EC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{853BF82F-EB89-4310-AA65-0590E1AE9182}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{853BF82F-EB89-4310-AA65-0590E1AE9182}.Release|x86.ActiveCfg = Release|Any CPU
 		{853BF82F-EB89-4310-AA65-0590E1AE9182}.Release|x86.Build.0 = Release|Any CPU
+		{DEBB5305-5B59-465D-894A-17912B015EC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEBB5305-5B59-465D-894A-17912B015EC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEBB5305-5B59-465D-894A-17912B015EC9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DEBB5305-5B59-465D-894A-17912B015EC9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DEBB5305-5B59-465D-894A-17912B015EC9}.Debug|x86.ActiveCfg = Debug|x86
+		{DEBB5305-5B59-465D-894A-17912B015EC9}.Debug|x86.Build.0 = Debug|x86
+		{DEBB5305-5B59-465D-894A-17912B015EC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEBB5305-5B59-465D-894A-17912B015EC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEBB5305-5B59-465D-894A-17912B015EC9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DEBB5305-5B59-465D-894A-17912B015EC9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DEBB5305-5B59-465D-894A-17912B015EC9}.Release|x86.ActiveCfg = Release|Any CPU
+		{DEBB5305-5B59-465D-894A-17912B015EC9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
