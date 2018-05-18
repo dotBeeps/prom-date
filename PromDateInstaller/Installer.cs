@@ -36,11 +36,11 @@ namespace PromDate.Installer
             string managedPath = monsterPromDir + "/MonsterProm_Data/Managed";
             File.Copy(managedPath + "/Assembly-CSharp.dll", managedPath + "/Assembly-CSharp.dll.backup");
             Injector.Injector.Inject(managedPath + "/Assembly-CSharp.dll");
-            if (!Directory.Exists(monsterPromDir + "/MonsterProm_Data/Mods"))
+            if (!Directory.Exists(monsterPromDir + "/Mods"))
             {
-                Directory.CreateDirectory(monsterPromDir + "/MonsterProm_Data/Mods");
+                Directory.CreateDirectory(monsterPromDir + "/Mods");
             }
-            File.Copy(monsterPromDir + "/Installer/PromDate.dll", monsterPromDir + "/MonsterProm_Data/Mods/PromDate.dll");
+            File.Copy(monsterPromDir + "/Installer/PromDate.dll", monsterPromDir + "/Mods/PromDate.dll");
 
             Directory.Delete(monsterPromDir.FullName + "/Installer", true);
         }
@@ -60,8 +60,8 @@ namespace PromDate.Installer
                 File.Delete(firstPassPath);
                 File.Move(firstPassPath + ".backup", firstPassPath);
             }
-            if (File.Exists(monsterPromDir + "/MonsterProm_Data/Mods/PromDate.dll"))
-                File.Delete(monsterPromDir + "/MonsterProm_Data/Mods/PromDate.dll");
+            if (File.Exists(monsterPromDir + "/Mods/PromDate.dll"))
+                File.Delete(monsterPromDir + "/Mods/PromDate.dll");
 
         }
     }
