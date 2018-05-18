@@ -53,7 +53,8 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventLoader\AudioHelper.cs" />
+    <Compile Include="EventLoader\AudioLoader.cs" />
+    <Compile Include="ModMenu.cs" />
     <Compile Include="Mod\CombinationMod.cs" />
     <Compile Include="EventLoader\CustomEventMod.cs" />
     <Compile Include="EventHelper.cs" />

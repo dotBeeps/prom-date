@@ -34,14 +34,14 @@ namespace PromDate
         public static void LoadModEndings()
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(EndingContainer));
-            string[] directories = Directory.GetDirectories(Application.dataPath + "/Mods");
+            string[] directories = Directory.GetDirectories(ModConstants.MODS_LOCATION);
             List<CSecretEndingConditions> modEndingConditions = new List<CSecretEndingConditions>();
             finalScenes.Clear();
             modEndings.Clear();
             foreach (string directory in directories)
             {
                 string modInfo = Directory.GetFiles(directory, "*.xml").FirstOrDefault();
-                if (string.IsNullOrEmpty(modInfo)) continue;
+                if (modInfo == null || modInfo == "") continue;
                 CustomEventMod mod = CustomEventMod.Load(modInfo);
                 if (!EventLoader.EventLoader.CustomEventMods.Any(m => m.Name == mod.Name)) continue;
                 string[] files = Directory.GetFiles(directory + "/EndingConditions", "*.xml");
@@ -54,13 +54,13 @@ namespace PromDate
                         GeneralManager.Instance.LogToFileOrConsole("\t[PromDate] Loading ending " + ending.SecretEndingName);
                         EventManager.CSecretEndingConditions endCond = EndingContainer.convertEndingConditions(ending, mod);
                         modEndingConditions.Add(endCond);
-                        modEndings.Add(EventManager.Instance.Events[endCond.cSecretEndingIndex]);
+                        EndingHelper.modEndings.Add(EventManager.Instance.Events[endCond.cSecretEndingIndex]);
                         FinalSceneInfo sceneInfo = new FinalSceneInfo() { FromPromScene = endCond.cSecretEndingIndex, SceneId = endCond.cSecretEndingIndex + 1 };
                         if (EventManager.Instance.Events[endCond.cSecretEndingIndex].ArgumentTags.Any(arg => arg.Contains("SFX")))
                         {
                             sceneInfo.AudioClip = EventManager.Instance.Events[endCond.cSecretEndingIndex].ArgumentTags.First(arg => arg.Contains("SFX")).Split('_')[1];
                         }
-                        finalScenes.Add(sceneInfo);
+                        EndingHelper.finalScenes.Add(sceneInfo);
                     }
                 }
             }

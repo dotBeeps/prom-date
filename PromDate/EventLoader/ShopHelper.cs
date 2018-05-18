@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
 using UnityEngine;
@@ -14,22 +15,26 @@ namespace PromDate.EventLoader
         public static List<ShopManager.CItemSprites> ModItems = new List<ShopManager.CItemSprites>();
         public static List<ShopManager.CItemSprites> NarrativeItems = new List<ShopManager.CItemSprites>();
 
-        public static void LoadItemsFromFile()
+        public static void LoadItemsFromFile(DirectoryInfo dir, CustomEventMod customEvent)
         {
-            string[] directories = Directory.GetDirectories(Application.dataPath + "/Mods");
-            foreach (string directory in directories)
+            string[] files = Directory.GetFiles(dir.FullName + "/Items", "*.xml");
+            foreach (string file in files)
             {
-                string[] files = Directory.GetFiles(directory + "/Items", "*.xml");
-                foreach (string file in files)
+                GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loading items from " + file);
+                ItemContainer itemContainer = ItemContainer.Load(file);
+                foreach (Item item in itemContainer.Items)
                 {
-                    GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loading items from " + file);
-                    ItemContainer itemContainer = ItemContainer.Load(file);
-                    foreach (Item item in itemContainer.Items)
+                    GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loading item: " + item.Name);
+                    AddShopItem(item.Name, item.Price, item.DescriptionTitle, item.Description, item.ShopkeeperMood, SpriteHelper.LookupCustomSprite(item.SmallSprite), SpriteHelper.LookupCustomSprite(item.LargeSprite), item.EventItem);
+                    if (!string.IsNullOrEmpty(item.UnlockDescription))
                     {
-                        AddShopItem(item.Name, item.Price, item.DescriptionTitle, item.Description, item.ShopkeeperMood, SpriteHelper.LookupCustomSprite(item.SmallSprite), SpriteHelper.LookupCustomSprite(item.LargeSprite), item.EventItem);
+                        if (ProgressTracker.HasEventModBeenLoadedBefore(customEvent)) return;
+                        GeneralManager.CUnlockableConditions cond = new GeneralManager.CUnlockableConditions(item.Name, NGameConstants.EUnlockableType.Item, "", new GeneralManager.CUnlockableRequirement[0], SpriteHelper.LookupCustomSprite(item.LargeSprite), item.UnlockDescription);
+                        (typeof(GeneralManager).GetField("mUnlockedThisRun", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(GeneralManager.Instance) as List<GeneralManager.CUnlockableConditions>).Add(cond);
                     }
                 }
             }
+            GeneralManager.Instance.CheckMoreUnlockablesThisRun();
         }
 
         public static void LoadItemsIntoShop()

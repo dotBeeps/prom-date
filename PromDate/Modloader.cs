@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using PromDate;
 using PromDate.EventLoader;
 using PromDate.Mod;
 using System;
@@ -44,7 +45,8 @@ public class Modloader : MonoBehaviour
     {
         SceneManager.activeSceneChanged += SceneChanged;
         GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loading mods.");
-        ModManager.Mods.Add(new EventLoaderMod());
+        ModManager.AddInternalMod(new EventLoaderMod());
+        ModManager.LoadMods();
         mods = new CombinationMod(ModManager.Mods);
         GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loaded!");
         mods.Awake();

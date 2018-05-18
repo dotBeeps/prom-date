@@ -30,7 +30,8 @@ public class EndingContainer
         foreach (string req in ending.EventsRequired)
         {
             string required = EventHelper.AppendModName(req, mod);
-            eventsRequired.Add(EventManager.Instance.Events.TakeWhile(ev => !ev.EventName.Contains(required)).Count());
+            int evIndex = EventManager.Instance.Events.TakeWhile(ev => !ev.EventName.Contains(required)).Count();
+            eventsRequired.Add(evIndex);
         }
         ending.SecretEndingName = EventHelper.AppendModName(ending.SecretEndingName, mod);
         int secretEndingIndex = EventManager.Instance.Events.TakeWhile(ev => !ev.EventName.Contains(ending.SecretEndingName)).Count();

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using PromDate.EventLoader;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,7 +14,7 @@ public class Mod : MonoBehaviour
         narratorEvent = new EventLoader.EventArgs();
         narratorEvent.name = "NarratorNotice";
         narratorEvent.turnType = NGameConstants.ETurnType.School;
-        EventLoader.Instance.AddToModEvents(narratorEvent);
+        EventHelper.AddToModEvents(narratorEvent);
         SceneManager.activeSceneChanged += this.OnSceneLoaded;
         GeneralManager.Instance.LogToFileOrConsole("[NarratorDate] Loaded in.");
     }
@@ -32,7 +33,7 @@ public class Mod : MonoBehaviour
 
                 if (narratorTalking > 30f)
                 {
-                    EventLoader.Instance.RequestModEvent(narratorEvent);
+                    EventHelper.RequestModEvent(narratorEvent);
                     trackNarrator = false;
                 }
             }

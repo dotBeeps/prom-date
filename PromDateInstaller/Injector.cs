@@ -28,7 +28,7 @@ namespace PromDate.Injector
                 instructions.Insert(0, processor.Create(OpCodes.Ldarg_0));
                 instructions.Insert(1, processor.Create(OpCodes.Call, Util.ImportMethod<Component>(unityGame, "get_gameObject")));
                 instructions.Insert(2, processor.Create(OpCodes.Call, Util.ImportMethod<Application>(unityGame, "get_dataPath")));
-                instructions.Insert(3, processor.Create(OpCodes.Ldstr, "/Mods/PromDate.dll"));
+                instructions.Insert(3, processor.Create(OpCodes.Ldstr, "/../Mods/PromDate.dll"));
                 instructions.Insert(4, processor.Create(OpCodes.Call, Util.ImportMethod<string>(unityGame, "Concat", typeof(string), typeof(string))));
                 instructions.Insert(5, processor.Create(OpCodes.Call, Util.ImportMethod<Assembly>(unityGame, "LoadFrom", typeof(string))));
                 instructions.Insert(6, processor.Create(OpCodes.Ldstr, "Modloader"));

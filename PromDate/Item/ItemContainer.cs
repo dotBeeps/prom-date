@@ -31,5 +31,6 @@ public class Item
     public string ShopkeeperMood;
     public string SmallSprite;
     public string LargeSprite;
+    public string UnlockDescription;
     public bool EventItem = false;
 }

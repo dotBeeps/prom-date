@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PromDate.EventLoader;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -13,6 +14,7 @@ namespace PromDate
         public static List<bool[]> ModEventChoicesSeenAllTime = new List<bool[]>();
         public static List<string> ModEndingsSeenAllTime = new List<string>();
         public static List<int> ModEndingsSeenCount = new List<int>();
+        public static List<CustomEventMod> ModsLoadedBefore = new List<CustomEventMod>();
 
         public static void LoadModProgress()
         {
@@ -41,12 +43,30 @@ namespace PromDate
             ModEventChoicesSeenAllTime = saveData.ModEventChoicesSeenAllTime;
             ModEndingsSeenAllTime = saveData.ModEndingsSeenAllTime;
             ModEndingsSeenCount = saveData.ModEndingsSeenCount;
+            ModsLoadedBefore.AddRange(saveData.ModsLoadedBefore);
+        }
+
+        public static void SaveEventModStarted(CustomEventMod customEvent)
+        {
+            if (!HasEventModBeenLoadedBefore(customEvent))
+                ModsLoadedBefore.Add(customEvent);
+            SaveModProgress();
+        }
+
+        public static bool HasEventModBeenLoadedBefore(CustomEventMod customEvent)
+        {
+            foreach (CustomEventMod eMod in ModsLoadedBefore)
+            {
+                if (eMod.Name == customEvent.Name && eMod.Author == customEvent.Author && eMod.Version == customEvent.Version)
+                    return true;
+            }
+            return false;
         }
 
         public static void SaveModProgress()
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ModSaveData));
-            ModSaveData saveData = new ModSaveData() { ModEventsSeenAllTime = ModEventsSeenAllTime, ModEndingsSeenAllTime = ModEndingsSeenAllTime, ModEndingsSeenCount = ModEndingsSeenCount, ModEventChoicesSeenAllTime = ModEventChoicesSeenAllTime };
+            ModSaveData saveData = new ModSaveData() { ModEventsSeenAllTime = ModEventsSeenAllTime, ModEndingsSeenAllTime = ModEndingsSeenAllTime, ModEndingsSeenCount = ModEndingsSeenCount, ModEventChoicesSeenAllTime = ModEventChoicesSeenAllTime, ModsLoadedBefore = ModsLoadedBefore };
             string xml = String.Empty;
             using (StringWriter strWriter = new StringWriter())
             {
@@ -67,6 +87,7 @@ namespace PromDate
             public List<bool[]> ModEventChoicesSeenAllTime = new List<bool[]>();
             public List<string> ModEndingsSeenAllTime = new List<string>();
             public List<int> ModEndingsSeenCount = new List<int>();
+            public List<CustomEventMod> ModsLoadedBefore = new List<CustomEventMod>();
         }
     }
 }

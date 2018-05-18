@@ -22,11 +22,12 @@ namespace PromDate.EventLoader
         private static Dictionary<SpriteInfo, Sprite> customNpcSprites = new Dictionary<SpriteInfo, Sprite>();
         private static EventManagerEditor_Helper eManHelper = new EventManagerEditor_Helper();
         private static MethodInfo getNpcSpritePath = eManHelper.GetType().GetMethod("GetNpcSpritePath", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static MethodInfo getLocationSpritePath = eManHelper.GetType().GetMethod("GetLocationSpritesPath", BindingFlags.NonPublic | BindingFlags.Instance);
 
-
+        // For forcing talking sprites that aren't currently present in the base game;
         public static Sprite ModTalkingSprite(string character)
         {
-            if (character != "" && character != null)
+            if (!string.IsNullOrEmpty(character))
             {
                 if (!ModConstants.VANILLA_CHARACTERS.Contains(character.ToUpper()))
                 {
@@ -36,9 +37,9 @@ namespace PromDate.EventLoader
             return null;
         }
 
+        // For custom events to lookup sprites, either from mods or vanilla.
         public static Sprite LookupNpcSprite(string character, int outfit, string mood)
         {
-
             Sprite sprite = null;
             if (ModConstants.VANILLA_CHARACTERS.Contains(character.ToUpper()))
             {
@@ -48,60 +49,71 @@ namespace PromDate.EventLoader
             {
                 sprite = customNpcSprites[new SpriteInfo() { CharName = character, Outfit = outfit, Mood = mood }];
             }
-
             return sprite;
         }
 
+        // Lookup any sprite that is present in the mods Images directory.
         public static Sprite LookupCustomSprite(string spriteName)
         {
             return customSprites.First(s => s.name.ToLower() == spriteName.ToLower());
         }
 
-        public static Sprite LookupBG(string spriteName)
+        public static Sprite LookupBG(string spriteName, Event ev)
         {
             //Todo: Actually lookup all bgs and not just endings.
-            Sprite sprite = customSprites.First(s => s.name.ToLower() == spriteName.ToLower());
+            Sprite sprite = LookupCustomSprite(spriteName);
             if (sprite == null)
             {
-                sprite = (Sprite)Resources.Load("Illustrations/Endings/" + spriteName, typeof(Sprite));
+                object[] parameters = new object[] { ev.Name, ev.Location, null, null, true };
+                object results = getLocationSpritePath.Invoke(eManHelper, parameters);
+                sprite = (Sprite)Resources.Load((string)parameters[2], typeof(Sprite));
             }
             return sprite;
         }
 
-        public static void LoadSprites()
+        public static Sprite LookupFG(string spriteName, Event ev)
         {
-            string[] directories = Directory.GetDirectories(Application.dataPath + "/Mods");
-            foreach (string directory in directories)
+            //Todo: Actually lookup all bgs and not just endings.
+            Sprite sprite = LookupCustomSprite(spriteName);
+            if (sprite == null)
             {
-                FileInfo[] files = (new DirectoryInfo(directory + "/Characters")).GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
-                foreach (FileInfo file in files)
-                {
-                    string[] spriteName = file.Name.Split('.')[0].Split('_');
-                    SpriteInfo spriteInfo = new SpriteInfo();
-                    spriteInfo.CharName = spriteName[0].ToUpper();
-                    Sprite sprite;
-                    if (spriteName[1].ToLower().Contains("speaking"))
-                    {
-                        spriteInfo.Outfit = 0;
-                        spriteInfo.Mood = "sticker";
-                        sprite = LoadStickerFromFile(file.FullName, file.Name.Split('.')[0]);
-                    }
-                    else
-                    {
-                        spriteInfo.Outfit = int.Parse(spriteName[1]);
-                        spriteInfo.Mood = spriteName[2].ToLower();
-                        sprite = LoadSpriteFromFile(file.FullName, file.Name.Split('.')[0]);
-                    }
-                    customNpcSprites.Add(spriteInfo, sprite);
-                }
+                object[] parameters = new object[] { ev.Name, ev.Location, null, null, true };
+                object results = getLocationSpritePath.Invoke(eManHelper, parameters);
+                sprite = (Sprite)Resources.Load((string)parameters[3], typeof(Sprite));
+            }
+            return sprite;
+        }
 
-                files = (new DirectoryInfo(directory + "/Images")).GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
-                foreach (FileInfo file in files)
+        public static void LoadSprites(DirectoryInfo dir)
+        {
+            FileInfo[] files = (new DirectoryInfo(dir.FullName + "/Characters")).GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
+            foreach (FileInfo file in files)
+            {
+                string[] spriteName = file.Name.Split('.')[0].Split('_');
+                SpriteInfo spriteInfo = new SpriteInfo();
+                spriteInfo.CharName = spriteName[0].ToUpper();
+                Sprite sprite;
+                if (spriteName[1].ToLower().Contains("speaking"))
                 {
-                    string spriteName = Path.GetFileNameWithoutExtension(file.Name);
-                    Sprite sprite = LoadSpriteFromFile(file.FullName, spriteName);
-                    customSprites.Add(sprite);
+                    spriteInfo.Outfit = 0;
+                    spriteInfo.Mood = "sticker";
+                    sprite = LoadStickerFromFile(file.FullName, file.Name.Split('.')[0]);
                 }
+                else
+                {
+                    spriteInfo.Outfit = int.Parse(spriteName[1]);
+                    spriteInfo.Mood = spriteName[2].ToLower();
+                    sprite = LoadSpriteFromFile(file.FullName, file.Name.Split('.')[0]);
+                }
+                customNpcSprites.Add(spriteInfo, sprite);
+            }
+
+            files = (new DirectoryInfo(dir.FullName + "/Images")).GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
+            foreach (FileInfo file in files)
+            {
+                string spriteName = Path.GetFileNameWithoutExtension(file.Name);
+                Sprite sprite = LoadSpriteFromFile(file.FullName, spriteName);
+                customSprites.Add(sprite);
             }
         }
 
@@ -113,7 +125,7 @@ namespace PromDate.EventLoader
             return sprite;
         }
 
-        private static Sprite LoadSpriteFromFile(string path, string sprName, float ppu = 100f)
+        public static Sprite LoadSpriteFromFile(string path, string sprName, float ppu = 100f)
         {
             Texture2D sprTex = LoadTextureFromFile(path);
             Sprite sprite = Sprite.Create(sprTex, new Rect(0, 0, sprTex.width, sprTex.height), Vector2.zero, ppu);

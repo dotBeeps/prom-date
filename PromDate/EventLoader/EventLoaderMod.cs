@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEngine.SceneManagement;
 
 namespace PromDate.EventLoader
 {
-    class EventLoaderMod : IMod
+    public class EventLoaderMod : IMod
     {
         public string Name { get { return "EventLoader"; } }
 
@@ -16,11 +17,7 @@ namespace PromDate.EventLoader
 
         public void Start()
         {
-            AudioHelper.LoadAudioFiles();
-            SpriteHelper.LoadSprites();
-            EndingHelper.LoadModEndings();
-            ShopHelper.LoadItemsFromFile();
-            EventLoader.LoadNewEvents();
+            InitCustomEvents();
         }
 
         public void Awake()
@@ -37,9 +34,7 @@ namespace PromDate.EventLoader
         {
             if (loaded.name == "InGame_School")
             {
-                EventLoader.AddEventsToGame();
-                EndingHelper.LoadModEndings();
-                ShopHelper.LoadItemsIntoShop();
+                LoadCustomEvents();
             }
         }
 
@@ -66,6 +61,30 @@ namespace PromDate.EventLoader
         public void OnEnable()
         {
 
+        }
+
+        private void InitCustomEvents()
+        {
+            DirectoryInfo[] modDirectories = (new DirectoryInfo(ModConstants.MODS_LOCATION)).GetDirectories();
+            foreach (DirectoryInfo dir in modDirectories)
+            {
+                string modPath = dir.GetFiles("*.xml").FirstOrDefault().FullName;
+                if (String.IsNullOrEmpty(modPath)) continue;
+                CustomEventMod customEvent = CustomEventMod.Load(modPath);
+
+                AudioLoader.LoadAudioFiles(dir);
+                SpriteHelper.LoadSprites(dir);
+                EventLoader.LoadNewEvents(dir, customEvent);
+                ShopHelper.LoadItemsFromFile(dir, customEvent);
+                ProgressTracker.SaveEventModStarted(customEvent);
+            }
+        }
+
+        private void LoadCustomEvents()
+        {
+            EventLoader.AddEventsToGame();
+            EndingHelper.LoadModEndings();
+            ShopHelper.LoadItemsIntoShop();
         }
     }
 }

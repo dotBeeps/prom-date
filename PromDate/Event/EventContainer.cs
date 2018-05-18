@@ -48,7 +48,7 @@ public class EventContainer
             }
             if (ev.EventScenes[i].Illustration_BG != "")
             {
-                flow.EventScenes[i].Illustration_BG = SpriteHelper.LookupBG(ev.EventScenes[i].Illustration_BG);
+                flow.EventScenes[i].Illustration_BG = SpriteHelper.LookupBG(ev.EventScenes[i].Illustration_BG, ev);
             }
             if (ev.EventScenes[i].Illustration_FG != "")
             {

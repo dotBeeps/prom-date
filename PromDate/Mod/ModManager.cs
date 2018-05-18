@@ -11,17 +11,20 @@ namespace PromDate.Mod
 {
     public static class ModManager
     {
-        private static List<IMod> _Mods;
+        private static List<IMod> _Mods = new List<IMod>();
         private static ModPreferences prefs;
 
         public static IEnumerable<IMod> Mods
         {
             get
             {
-                if (_Mods == null)
-                    LoadMods();
                 return _Mods;
             }
+        }
+
+        public static void AddInternalMod(IMod mod)
+        {
+            _Mods.Add(mod);
         }
 
         public static bool IsModDisabled(IMod mod)
@@ -57,7 +60,7 @@ namespace PromDate.Mod
             prefs.Save(ModConstants.MODLOADER_PREFS_PATH);
         }
 
-        private static void LoadMods()
+        public static void LoadMods()
         {
             List<IMod> mods = new List<IMod>();
 
@@ -81,7 +84,7 @@ namespace PromDate.Mod
             {
                 prefs = ModPreferences.Load(ModConstants.MODLOADER_PREFS_PATH);
             }
-            _Mods = mods;
+            _Mods.AddRange(mods);
         }
 
         private static IEnumerable<IMod> LoadModsFromFile(string path)
