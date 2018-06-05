@@ -1,2 +1,0 @@
-C:\Users\ddogc\Documents\prom-date\MonsterPromDiscordRPC\obj\Debug\MonsterPromDiscordRPC.csprojResolveAssemblyReference.cache
-C:\Users\ddogc\Documents\prom-date\MonsterPromDiscordRPC\obj\Debug\MonsterPromDiscordRPC.csproj.CoreCompileInputs.cache

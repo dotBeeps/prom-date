@@ -86,7 +86,7 @@ namespace PromDate.EventLoader
 
         public static void LoadSprites(DirectoryInfo dir)
         {
-            FileInfo[] charFiles = new DirectoryInfo(dir.FullName + "Images/Characters").GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
+            FileInfo[] charFiles = new DirectoryInfo(dir.FullName + "/Images/Characters").GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
             foreach (FileInfo file in charFiles)
             {
                 string[] spriteName = file.Name.Split('.')[0].Split('_');
