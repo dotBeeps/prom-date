@@ -52,5 +52,10 @@ namespace PromDateInstaller
             Installer.UninstallPromDate(fileBox.Text);
             status.Text = "Uninstalled!";
         }
+
+        private void urlDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -1,37 +1,40 @@
 ﻿using System;
 
-public class ContData
+namespace PromDate
 {
-	
-	public bool Initialized;
+    public class ContData
+    {
 
-	
-	public bool IsContinuityRoot;
+        public bool Initialized;
 
-	
-	public int ContinuityEventLengthFromThisNode;
 
-	
-	public int Option1SuccessContinuityIndex;
+        public bool IsContinuityRoot;
 
-	
-	public int Option1FailureContinuityIndex;
 
-	
-	public int Option2SuccessContinuityIndex;
+        public int ContinuityEventLengthFromThisNode;
 
-	
-	public int Option2FailureContinuityIndex;
 
-	
-	public bool Option1SuccessIsSelfContinuity;
+        public int Option1SuccessContinuityIndex;
 
-	
-	public bool Option1FailureIsSelfContinuity;
 
-	
-	public bool Option2SuccessIsSelfContinuity;
+        public int Option1FailureContinuityIndex;
 
-	
-	public bool Option2FailureIsSelfContinuity;
+
+        public int Option2SuccessContinuityIndex;
+
+
+        public int Option2FailureContinuityIndex;
+
+
+        public bool Option1SuccessIsSelfContinuity;
+
+
+        public bool Option1FailureIsSelfContinuity;
+
+
+        public bool Option2SuccessIsSelfContinuity;
+
+
+        public bool Option2FailureIsSelfContinuity;
+    }
 }

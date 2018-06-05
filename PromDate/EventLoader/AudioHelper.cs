@@ -9,11 +9,28 @@ using UnityEngine;
 
 namespace PromDate.EventLoader
 {
-    public static class AudioLoader
+    public class AudioHelper : MonoBehaviour
     {
-        public static IEnumerator LoadAudioFiles(DirectoryInfo dir)
+        public static AudioHelper Instance;
+
+        void Awake()
         {
-            FileInfo[] files = new DirectoryInfo(dir + "/Audio").GetFiles("*.wav").ToArray();
+
+            if (Instance != null)
+                Destroy(this);
+            else
+                Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+        public void LoadAudio(DirectoryInfo dir)
+        {
+            StartCoroutine(LoadAudioFiles(dir));
+        }
+
+        public IEnumerator LoadAudioFiles(DirectoryInfo dir)
+        {
+            FileInfo[] files = new DirectoryInfo(dir.FullName + "/Audio").GetFiles("*.wav");
             foreach (FileInfo file in files)
             {
                 GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loading audio file: " + file.Name);

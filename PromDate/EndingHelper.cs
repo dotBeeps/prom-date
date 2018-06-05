@@ -33,18 +33,19 @@ namespace PromDate
 
         public static void LoadModEndings()
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(EndingContainer));
-            string[] directories = Directory.GetDirectories(ModConstants.MODS_LOCATION);
+            DirectoryInfo[] directories = new DirectoryInfo(ModConstants.MODS_LOCATION).GetDirectories();
             List<CSecretEndingConditions> modEndingConditions = new List<CSecretEndingConditions>();
+
             finalScenes.Clear();
             modEndings.Clear();
-            foreach (string directory in directories)
+
+            foreach (DirectoryInfo directory in directories)
             {
-                string modInfo = Directory.GetFiles(directory, "*.xml").FirstOrDefault();
-                if (modInfo == null || modInfo == "") continue;
-                CustomEventMod mod = CustomEventMod.Load(modInfo);
-                if (!EventLoader.EventLoader.CustomEventMods.Any(m => m.Name == mod.Name)) continue;
-                string[] files = Directory.GetFiles(directory + "/EndingConditions", "*.xml");
+                FileInfo modInfo = directory.GetFiles("*.xml").FirstOrDefault();
+                if (modInfo == null) continue;
+                CustomEventMod mod = CustomEventMod.Load(modInfo.FullName);
+                if (!EventLoader.EventLoader.EventModLoaded(mod)) continue;
+                string[] files = Directory.GetFiles(directory.FullName + "/EndingConditions", "*.xml");
                 foreach (string file in files)
                 {
                     GeneralManager.Instance.LogToFileOrConsole("[PromDate] Loading ending conditions from " + file);

@@ -58,7 +58,7 @@ namespace PromDate.EventLoader
             return customSprites.First(s => s.name.ToLower() == spriteName.ToLower());
         }
 
-        public static Sprite LookupBG(string spriteName, Event ev)
+        public static Sprite LookupBG(string spriteName, ModEvent ev)
         {
             //Todo: Actually lookup all bgs and not just endings.
             Sprite sprite = LookupCustomSprite(spriteName);
@@ -71,7 +71,7 @@ namespace PromDate.EventLoader
             return sprite;
         }
 
-        public static Sprite LookupFG(string spriteName, Event ev)
+        public static Sprite LookupFG(string spriteName, ModEvent ev)
         {
             //Todo: Actually lookup all bgs and not just endings.
             Sprite sprite = LookupCustomSprite(spriteName);
@@ -86,8 +86,8 @@ namespace PromDate.EventLoader
 
         public static void LoadSprites(DirectoryInfo dir)
         {
-            FileInfo[] files = (new DirectoryInfo(dir.FullName + "/Characters")).GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
-            foreach (FileInfo file in files)
+            FileInfo[] charFiles = new DirectoryInfo(dir.FullName + "Images/Characters").GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
+            foreach (FileInfo file in charFiles)
             {
                 string[] spriteName = file.Name.Split('.')[0].Split('_');
                 SpriteInfo spriteInfo = new SpriteInfo();
@@ -108,7 +108,9 @@ namespace PromDate.EventLoader
                 customNpcSprites.Add(spriteInfo, sprite);
             }
 
-            files = (new DirectoryInfo(dir.FullName + "/Images")).GetFiles("*.*", SearchOption.AllDirectories).Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray();
+            FileInfo[] files = new DirectoryInfo(dir.FullName + "/Images").GetFiles("*.*", SearchOption.AllDirectories)
+                .Where(file => file.Name.ToLower().EndsWith("jpg") || file.Name.ToLower().EndsWith("png")).ToArray()
+                .Except(charFiles).ToArray();
             foreach (FileInfo file in files)
             {
                 string spriteName = Path.GetFileNameWithoutExtension(file.Name);

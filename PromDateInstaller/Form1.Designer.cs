@@ -104,6 +104,7 @@
             this.urlDropdown.Name = "urlDropdown";
             this.urlDropdown.Size = new System.Drawing.Size(288, 21);
             this.urlDropdown.TabIndex = 7;
+            this.urlDropdown.SelectedIndexChanged += new System.EventHandler(this.urlDropdown_SelectedIndexChanged);
             // 
             // status
             // 

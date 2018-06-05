@@ -36,6 +36,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\Temp\bin\Debug\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="DOTween">
+      <HintPath>..\..\..\Downloads\DOTween_1_1_710\DOTween\DOTween.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <HintPath>..\..\Monster Prom Mod Dev\MonsterProm_Data\Managed\System.dll</HintPath>
     </Reference>
@@ -53,7 +56,8 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventLoader\AudioLoader.cs" />
+    <Compile Include="EventLoader\AudioHelper.cs" />
+    <Compile Include="EventLoader\CustomChatEffects.cs" />
     <Compile Include="ModMenu.cs" />
     <Compile Include="Mod\CombinationMod.cs" />
     <Compile Include="EventLoader\CustomEventMod.cs" />
@@ -62,7 +66,7 @@
     <Compile Include="Event\ContData.cs" />
     <Compile Include="Ending\EndingContainer.cs" />
     <Compile Include="EndingHelper.cs" />
-    <Compile Include="Event\Event.cs" />
+    <Compile Include="Event\ModEvent.cs" />
     <Compile Include="Event\EventContainer.cs" />
     <Compile Include="EventLoader\EventLoader.cs" />
     <Compile Include="Item\ItemContainer.cs" />
@@ -70,6 +74,7 @@
     <Compile Include="Mod\ModManager.cs" />
     <Compile Include="Patches\EventManager_CalculateAndGetSuitableEvent_Patch.cs" />
     <Compile Include="Patches\EventManager_L_AdvanceStepCurrentEvent_Patch.cs" />
+    <Compile Include="Patches\EventManager_ProcessTextTagsPatterns_Patch.cs" />
     <Compile Include="Patches\EventManager_StartEvent_Patch.cs" />
     <Compile Include="Event\EventRestriction.cs" />
     <Compile Include="Patches\Event_Manager_L_OnEventEnd_Patch.cs" />
@@ -122,6 +127,7 @@
     <Compile Include="EventLoader\ShopHelper.cs" />
     <Compile Include="Patches\ShopManager_IsNarrativeItem_Patch.cs" />
     <Compile Include="EventLoader\SpriteHelper.cs" />
+    <Compile Include="SceneHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Harmony\Properties\launchSettings.json" />

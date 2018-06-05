@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace PromDate.EventLoader
@@ -18,11 +19,12 @@ namespace PromDate.EventLoader
         public void Start()
         {
             InitCustomEvents();
+            CustomChatEffects.AddDefaultEffects();
         }
 
         public void Awake()
         {
-
+            new GameObject().AddComponent<AudioHelper>();
         }
 
         public void ApplicationQuit()
@@ -71,12 +73,12 @@ namespace PromDate.EventLoader
                 string modPath = dir.GetFiles("*.xml").FirstOrDefault().FullName;
                 if (String.IsNullOrEmpty(modPath)) continue;
                 CustomEventMod customEvent = CustomEventMod.Load(modPath);
-
-                AudioLoader.LoadAudioFiles(dir);
+                AudioHelper.Instance.LoadAudio(dir);
                 SpriteHelper.LoadSprites(dir);
                 EventLoader.LoadNewEvents(dir, customEvent);
                 ShopHelper.LoadItemsFromFile(dir, customEvent);
                 ProgressTracker.SaveEventModStarted(customEvent);
+                EventLoader.CustomEvents.Add(customEvent);
             }
         }
 
