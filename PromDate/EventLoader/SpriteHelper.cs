@@ -47,7 +47,7 @@ namespace PromDate.EventLoader
             }
             else
             {
-                sprite = customNpcSprites[new SpriteInfo() { CharName = character, Outfit = outfit, Mood = mood }];
+                sprite = customNpcSprites.FirstOrDefault(k => String.Equals(k.Key.CharName, character, StringComparison.CurrentCultureIgnoreCase) && k.Key.Outfit == outfit && String.Equals(k.Key.Mood, mood, StringComparison.CurrentCultureIgnoreCase)).Value;
             }
             return sprite;
         }
